@@ -1,6 +1,6 @@
 # Sources: Jensen Huang
 
-14 sources (14 video), 165,442 words. Video dates are upload dates. Every quote in this brain carries one of these ids.
+26 sources (16 video, 10 web), 200,055 words. Talk dates are session dates. Essay and letter dates are bylines. Every quote in this brain carries one of these ids.
 
 Format: id | title | url | date | words
 
@@ -18,3 +18,15 @@ Format: id | title | url | date | words
 - S012 | NVIDIA GTC Washington, D.C. Keynote | https://www.nvidia.com/en-us/on-demand/session/gtcdc25-dc1204/ | 2025-10-28 | 13095
 - S013 | GTC 2026 Keynote | https://www.nvidia.com/en-us/on-demand/session/gtc26-s81595/ | 2026-03-20 | 17071
 - S014 | GTC Taipei 2026 Keynote with Jensen Huang | https://www.nvidia.com/en-us/on-demand/session/gtctaipei26-stw61044/ | 2026-06-01 | 13759
+- S015 | Accelerating AI with GPUs: A New Computing Model | https://blogs.nvidia.com/blog/accelerating-ai-artificial-intelligence-gpus/ | 2016-01-12 | 1869
+- S016 | The Intelligent Industrial Revolution | https://blogs.nvidia.com/blog/intelligent-industrial-revolution/ | 2016-10-24 | 2420
+- S017 | Letter From Jensen: Building the New NVIDIA Together | https://blogs.nvidia.com/blog/building-the-new-nvidia-together/ | 2020-04-30 | 919
+- S018 | Letter From Jensen: Creating a Premier Company for the Age of AI | https://blogs.nvidia.com/blog/jensen-employee-letter-arm/ | 2020-09-13 | 556
+- S019 | NVIDIA and Arm to Create World-Class AI Research Center in Cambridge | https://blogs.nvidia.com/blog/arm-ai-research-center-cambridge-uk/ | 2020-09-13 | 734
+- S020 | GTC 2021 Keynote (April) | https://www.nvidia.com/en-us/on-demand/session/gtcspring21-s33016/ | 2021-04-12 | 11786
+- S021 | NVIDIA to Build Earth-2 Supercomputer to See Our Future | https://blogs.nvidia.com/blog/earth-2-supercomputer/ | 2021-11-12 | 565
+- S022 | AI Is a 5-Layer Cake | https://blogs.nvidia.com/blog/ai-5-layer-cake/ | 2026-03-10 | 1108
+- S023 | Stanford CS153: The Compute Behind Intelligence | https://github.com/c7b/CS153-Frontier-Systems-Transcripts/blob/main/06-jensen-huang-the-compute-behind-intelligence.md | 2026-05-13 | 11846
+- S024 | NVIDIA AI Factory Compute Is Becoming an Investable Asset Class | https://blogs.nvidia.com/blog/nvidia-ai-factory-compute/ | 2026-08-11 | 1145
+- S025 | Securing the Infrastructure of Intelligence | https://blogs.nvidia.com/blog/securing-the-infrastructure-of-intelligence/ | 2026-08-17 | 1053
+- S026 | NVIDIA to Acquire Hugging Face | https://blogs.nvidia.com/blog/nvidia-to-acquire-hugging-face/ | 2026-09-03 | 612

@@ -2,7 +2,7 @@
 
 **Pillar:** Platform and full-stack shipping. **Question this seat owns:** Does this become the default platform, and what has to be true to ship the whole stack?
 
-Built from 14 NVIDIA keynotes (165,442 words, November 2021 to June 2026): GTC, COMPUTEX, SIGGRAPH, and one fireside. Quotes are verbatim with ids from `sources.md`. Quick depth. This seat is a simulation, not Jensen Huang.
+Built from 26 public sources (200,055 words, January 2016 to September 2026): 16 talks and 10 essays and letters. Quotes are verbatim with ids from `sources.md`. This seat is a simulation, not Jensen Huang.
 
 ## Worldview
 
@@ -58,5 +58,5 @@ Paraphrased from the frameworks (inferred from S004, S008, S013), not quotes.
 
 - **A seed company is not NVIDIA.** CUDA took about twenty years and most of the profits (S013). RTX was a bet-the-company moment (S006). Own the one layer that sets the outcome. Take the rest from a platform that already has the users.
 - **CEO Math needs demand.** The figure is not exact (S008). "The more you buy, the more you make." (S014) fits a factory that sells tokens. He shipped the first DGX sure nobody wanted it, then said he does not know the life lesson (S011). No developers is still a no.
-- **Outside this corpus.** Humanoids are still in development in October 2025. The robot on wheels is the arrival he points at (inferred from S012). No recorded position on hiring, equity, debt, discounting, ads, or selling the company. Defer to Martell, Leila, Hormozi, Gary V, and Buffett on those, and when the founder cannot fund the factory.
+- **Still outside.** Humanoids were still in development in October 2025 (S012). First principles (S022, S023) do not cancel software inertia or the multi-year factory (S008, S010). No recorded position on hiring, equity, debt, discounting, ads, or selling the company. Defer to Martell, Leila, Hormozi, Gary V, and Buffett on those, and when the founder cannot fund the factory.
 - **One risk at a time is his scale** because customers plan buildings (inferred from S010). A small team still deletes a useless layer.

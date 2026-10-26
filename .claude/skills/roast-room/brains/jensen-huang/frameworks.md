@@ -1,6 +1,6 @@
 # Frameworks: Jensen Huang
 
-10 frameworks, roughly most-used first, built from the NVIDIA GTC, COMPUTEX, and SIGGRAPH keynotes, 2021 to 2026 (S001 to S014). Names are his where he named them; otherwise a short descriptive name marked *(unnamed)*. The How-to-score lines are scoring guidance for the council, built from his stated thresholds, not quotes.
+12 frameworks, roughly most-used first, built from 26 public sources, 2016 to 2026 (S001 to S026): keynotes, letters, essays, and one Stanford talk. Names are his where he named them; otherwise a short descriptive name marked *(unnamed)*. The How-to-score lines are scoring guidance for the council, built from his stated thresholds, not quotes.
 
 ---
 
@@ -42,21 +42,21 @@
 
 ## 5. AI factory *(his phrase)*
 
-- **What it is:** A data center with one job: take data in and send intelligence out, as tokens. Throughput, uptime, and idle time decide revenue, because the product is the token, not a retrieved file. By 2024 he states the factory's goal as revenue. By 2026 he treats tokens as a commodity that splits into price tiers. Inferred from S002, S004, S007, S008, S010, S011, S012, S013, S014.
+- **What it is:** A data center with one job: take data in and send intelligence out, as tokens. Throughput, uptime, and idle time decide revenue, because the product is the token, not a retrieved file. By 2024 he states the factory's goal as revenue. By 2026 he treats tokens as a commodity that splits into price tiers. The March 2026 essay says the same systems manufacture intelligence rather than store files (S022). Inferred from S002, S004, S007, S008, S010, S011, S012, S013, S014, S022, S024, S025.
 - **Parts:** One job, generating tokens. Energy in, tokens out. Uptime and utilization. Throughput tied to revenue. A price that can rise when the token is smarter and slower, and fall when it is plentiful.
 - **When to use:** Someone is building or buying infrastructure whose output is generated intelligence: tokens of language, images, proteins, motion, or actions. A general-purpose app server is a different object.
 - **How to score:** 5 if the founder names the token, the throughput, the power cap, and who pays per token, and the machine's job is generation. 3 if tokens are the product and utilization is unmeasured. 1 if the center is a file store or a general cost center. He reserves the factory label for a computer that runs one job (S012). Scoring an ordinary multi-purpose product as a failed factory misuses the frame.
 - **Quote:** "They are revenue generating facilities, and they are designed to manufacture tokens." (S011)
-- **Sources:** 9 (S002, S004, S007, S008, S010, S011, S012, S013, S014)
+- **Sources:** 12 (S002, S004, S007, S008, S010, S011, S012, S013, S014, S022, S024, S025)
 
 ## 6. Digital twin before deployment *(unnamed)*
 
-- **What it is:** Build and operate the thing digitally before it exists in the world. Software that will ship in large numbers gets tested on a twin of the product. Factories and AI factories get designed, planned, and operated as twins before the building or the racks arrive. Inferred from S001, S002, S003, S004, S007, S010, S011, S012, S014.
+- **What it is:** Build and operate the thing digitally before it exists in the world. Software that will ship in large numbers gets tested on a twin of the product. Factories and AI factories get designed, planned, and operated as twins before the building or the racks arrive. In November 2021 he writes that simulation is how to make the future real today. "To make our future a reality today, simulation is the answer." (S021) Inferred from S001, S002, S003, S004, S007, S010, S011, S012, S014, S021.
 - **Parts:** A model faithful enough to test software, layout, and failure. Synthetic data and physics where the product perceives or moves. Telemetry once the real system exists, so the twin stays the operating picture. Only then, physical deploy.
 - **When to use:** A large physical rollout, a factory, a fleet, or an AI factory whose downtime is intolerably expensive. A small software beta with nothing physical at stake does not need this.
 - **How to score:** 5 if the software and the site are rehearsed on the twin before volume deployment or before a rack lands. 3 if the twin is a picture of the site and the software test is still ahead. 1 if production is the first test. He applies the hard version to factories in the tens of billions of dollars: they have to work the first time, because the cost of capital is already running (S011, S014).
 - **Quote:** "No physical product operated by software can be deployed in large numbers without testing the software on its digital twin." (S003)
-- **Sources:** 9 (S001, S002, S003, S004, S007, S010, S011, S012, S014)
+- **Sources:** 10 (S001, S002, S003, S004, S007, S010, S011, S012, S014, S021)
 
 ## 7. Vertically integrated, horizontally open *(his phrase)*
 
@@ -69,21 +69,21 @@
 
 ## 8. Cost per token and tokens per watt *(unnamed)*
 
-- **What it is:** The site is power limited, so revenue is power limited. Judge a computer by tokens per watt and by tokens per second divided by the total cost of owning the whole data center. Compare generations at the same power. An expensive machine can be the cheap way to make tokens. Inferred from S004, S006, S007, S008, S010, S012, S013, S014.
+- **What it is:** The site is power limited, so revenue is power limited. Judge a computer by tokens per watt and by tokens per second divided by the total cost of owning the whole data center. Compare generations at the same power. An expensive machine can be the cheap way to make tokens. At Stanford he says the same test moved 50 times in two years. "if you look at tokens per watt, we improved it by 50x" (S023) Inferred from S004, S006, S007, S008, S010, S012, S013, S014, S023.
 - **Parts:** Fix the power and the building. Measure tokens per second per watt. Add the rest of the total cost: utilization, network, time to come online, useful life. Pick the architecture that produces more sellable tokens inside that cap.
 - **When to use:** Any buy or build of AI infrastructure, and any pricing conversation that starts from the sticker price of a chip. Also when a "free" or cheap accelerator is the whole argument.
 - **How to score:** 5 if the winner produces more tokens inside the power and the shell you already have to pay for, over a long useful life. 3 if chip price dropped and tokens per watt are unknown. 1 if the cheaper chip wins the spreadsheet while the power cap stays idle. He treats a wrong architecture as too expensive even when the hardware is free, because the factory and the power still get built (S013). His rough ratios are CEO Math: the direction is the claim, and he says the figure itself is not exact (S008).
 - **Quote:** "if you have the wrong architecture, even if it's free, it's not cheap enough." (S013)
-- **Sources:** 8 (S004, S006, S007, S008, S010, S012, S013, S014)
+- **Sources:** 9 (S004, S006, S007, S008, S010, S012, S013, S014, S023)
 
 ## 9. Extreme co-design *(his phrase)*
 
-- **What it is:** A single chip adds a percentage. A generation that is many times faster is designed across chips, systems, networking, software, and models at the same time, from a blank sheet, and shipped on a yearly rhythm. He uses the stack to explain jumps on the order of 30 to 40 times in one generation, against a small multiple from the process node. Inferred from S001, S004, S011, S012, S013, S014.
+- **What it is:** A single chip adds a percentage. A generation that is many times faster is designed across chips, systems, networking, software, and models at the same time, from a blank sheet, and shipped on a yearly rhythm. He uses the stack to explain jumps on the order of 30 to 40 times in one generation, against a small multiple from the process node. At Stanford he names NVIDIA as that kind of company. "NVIDIA is probably the first computer systems company that's extreme co-design." (S023) He would rather leave flops idle than hit the bottleneck. "I would like to be at low MFU all the time." (S023) "In two years, we improved something by 50 times." (S023) Inferred from S001, S004, S011, S012, S013, S014, S023.
 - **Parts:** Start from the workload, not from a socket. Move several layers in the same generation. Keep the programming model stable while the implementation changes. Accept that one chip will not make the computer ten times faster.
 - **When to use:** A claim of a generational leap, a custom chip proposal, or a vendor bake-off. A startup that does not build silicon uses it as a buying test: do the layers move together, and does the software still run.
 - **How to score:** 5 if several layers move together and the gain is far above a transistor shrink. He puts a chip-only step near a one-and-a-half-times transistor gain and a co-designed generation in the tens of times (S011, S013). 3 if two layers move and the software model holds. 1 if the plan is a new chip under the same system, network, and software. Yearly co-design is his pace at NVIDIA's scale. A smaller company scores on whether its vendor, or its own one critical layer, is on that kind of loop.
 - **Quote:** "You can't just design chips and hope that things on top of it is gonna go faster." (S012)
-- **Sources:** 6 (S001, S004, S011, S012, S013, S014)
+- **Sources:** 7 (S001, S004, S011, S012, S013, S014, S023)
 
 ## 10. Throughput versus interactivity *(he calls the goal the area under the curve)*
 
@@ -93,3 +93,21 @@
 - **How to score:** 5 if both axes are measured at the same power and the offer is tiered. 3 if only factory throughput is managed and users feel whatever latency falls out. 1 if one configuration is promised as the low-cost token and the low-latency token. He illustrates tiers from a free token through a few dollars per million, then tens of dollars, up to a premium on the order of 150 dollars per million for the fastest, longest work (S013). Score the shape. Check the dollar levels against the market in front of you.
 - **Quote:** "your goal is to maximize the area under the curve" (S010)
 - **Sources:** 5 (S007, S010, S011, S013, S014)
+
+## 11. Five-layer cake *(his phrase)*
+
+- **What it is:** Looked at as an industry, AI is five layers. The March 2026 essay orders them energy, chips, infrastructure, models, and applications. Energy is the first principle and the cap on how much intelligence the system can make. The infrastructure layer is the factory: it manufactures intelligence rather than stores files. Every application pulls on every layer under it. The March 2026 keynote uses the same name for land, power, shell, chips, platforms, and models (S013). Inferred from S013, S022.
+- **Parts:** Energy. Chips. Infrastructure, meaning land, power, cooling, networking, and the factory. Models. Applications.
+- **When to use:** A plan that starts at the model or the app and treats power, chips, or the factory as someone else's problem. Also when a team names one layer and ignores the one under it.
+- **How to score:** 5 if the founder names the layer they own, names the layer that caps them, and that lower layer has an owner. 3 if the application is real and power or chips are a dated dependency. 1 if the plan is a model with no energy, no factory, and no path onto machines people already run. Scoring guidance, not a quote.
+- **Quote:** "When you look at AI industrially, it resolves into a five-layer stack." (S022)
+- **Sources:** 2 (S013, S022)
+
+## 12. Accelerated-disaggregated infrastructure *(his phrase)*
+
+- **What it is:** The old cloud was hyper-converged: CPU servers with storage, scaled out. AI moves the data center to accelerated and disaggregated. CPU, GPU, and storage scale separately, and the network that joins them is the computer. When compute gets 10 to 50 times faster, moving data is the bottleneck. In April 2021 that bottleneck was PCIe, so he announced an Arm CPU built for the accelerator link (S020). Inferred from S017, S020.
+- **Parts:** Separate CPU, GPU, and storage. A fabric that makes them one composable computer. Design or buy the link the speedup turns into the bottleneck.
+- **When to use:** A plan that speeds the processor and leaves the network, the CPU socket, or the memory path alone. Also when the choice is a converged box versus a fabric.
+- **How to score:** 5 if the bottleneck after the speedup is named, and the link or the CPU is in the design. 3 if compute is accelerated and the network is a later phase with a date. 1 if the plan is a faster chip on the old bus. Two sources state the move. The score is a reading of those sources, not a new threshold.
+- **Quote:** "AI is now driving an architecture change from Hyper-Converged Infrastructures to Accelerated-Disaggregated Infrastructure." (S017)
+- **Sources:** 2 (S017, S020)

@@ -1,6 +1,6 @@
 # Positions: Jensen Huang
 
-19 topics from 14 keynotes, 2021-11-09 to 2026-06-01 (S001 to S014). Each stance has a verbatim quote, a source id, and the upload date. Where the line moved, both versions are dated and the later one is marked newer. Topics these talks do not cover are listed at the end.
+23 topics from 26 sources, 2016-01-12 to 2026-09-03 (S001 to S026). Each stance has a verbatim quote, a source id, and the date. Where the line moved, both versions are dated and the later one is marked newer. Topics these sources do not cover are listed at the end.
 
 ## Platform
 - **Stance:** What you sell is the platform customers can commit a multi-year build to. In 2024 that platform is the generation. In 2026 the company he describes is an infrastructure company. Inferred from S007, S008, S013, S014.
@@ -10,7 +10,7 @@
 - 2026-06-01, newer: "NVIDIA has really become an infrastructure company, not just a GPU company" (S014)
 
 ## Full stack
-- **Stance:** Build the whole stack so you understand the workload, then open every layer so a partner can take a part or the lot. The programming model is the product. Inferred from S001, S004, S007, S010, S013.
+- **Stance:** Build the whole stack so you understand the workload, then open every layer so a partner can take a part or the lot. The programming model is the product. When compute speeds up, the data center becomes a composable computer and the network is the bottleneck. Inferred from S001, S004, S007, S010, S013, S017, S023.
 - 2021-11-09: "NVIDIA accelerated computing is a Full-Stack, Data Center Scale, and Open Platform." (S001)
 - 2022-03-22: "The platforms are open for developers to adopt in part or in whole." (S002)
 - 2023-03-21: "Accelerated computing is not easy it requires full-stack invention from chips, systems, networking, acceleration libraries, to refactoring the applications." (S004)
@@ -19,9 +19,13 @@
 - 2025-03-25: "the programming model is the chip" (S010)
 - 2026-03-20: "NVIDIA is a vertically integrated computing company with open horizontal integration with the world." (S013)
 - 2026-03-20: "Accelerated computing is not a chip problem." (S013)
+- 2020-04-30: "The data center is now a composable computer." (S017)
+- 2020-04-30: "AI is now driving an architecture change from Hyper-Converged Infrastructures to Accelerated-Disaggregated Infrastructure." (S017)
+- 2026-05-13: "NVIDIA is probably the first computer systems company that's extreme co-design." (S023)
 
 ## CUDA and ecosystem
-- **Stance:** The moat is the programming model, the domain libraries, and an install base you refuse to break. Developers are who the company serves, and a developer who asks for a machine gets a yes. Inferred from S001, S007, S008, S010, S011, S013.
+- **Stance:** The moat is the programming model, the domain libraries, and an install base you refuse to break. Developers are who the company serves, and a developer who asks for a machine gets a yes. Inferred from S001, S007, S008, S010, S011, S013, S016.
+- 2016-10-24: "The number of GPU deep learning developers has leapt 25 times in just two years." (S016)
 - 2021-11-09: "We have been advancing CUDA and the ecosystem for 15 years and counting." (S001)
 - 2024-03-18: "everything that we do in our company is in service of our developers" (S007)
 - 2024-06-02: "These domain specific libraries are really the treasure of our company. We have 350 of them." (S008)
@@ -71,7 +75,7 @@
 - 2026-03-20: "So Vera Rubin, you should get there as soon as you can" (S013)
 
 ## Capital and multi-year spend
-- **Stance:** This spend is planned years ahead. It is the cost of making intelligence, and the machine only pays if you are sure of use, performance, cost, and a long life. Factory dollar figures in these talks are not one number. Inferred from S001, S010, S011, S012, S013, S014.
+- **Stance:** This spend is planned years ahead. It is the cost of making intelligence, and the machine only pays if you are sure of use, performance, cost, and a long life. Factory dollar figures in these talks are not one number. Inferred from S001, S010, S011, S012, S013, S014, S022.
 - 2021-11-09: "But when a solution to a worthwhile problem is within grasp, the investments will come" (S001)
 - 2025-03-25: "requires capital investment now this is a very big idea" (S010) Software now needs capital because the computer generates the tokens.
 - 2025-03-25: "this isn't discretionary spend this is spend that we have to go plan on" (S010)
@@ -82,6 +86,7 @@
 - 2026-03-20: "that gigawatt factory is about $40 billion." (S013) He is pricing the empty shell amortized over 15 years, before the computers go in.
 - 2026-06-01, newer per-gigawatt build cost: "soon it will be $80, $100 billion per gigawatt." (S014) He has just walked the cost from the $20 to $30 billion range, through $50 to $60 billion.
 - 2026-06-01: "It must work the first time and it must work right away." (S014)
+- 2026-03-10: "We are a few hundred billion dollars into it. Trillions of dollars of infrastructure still need to be built." (S022)
 
 ## Pricing and TCO
 - **Stance:** Judge the factory on cost per token and on how long the asset stays useful. The dearest computer can make the cheapest token. Volume used to be a savings line. The newer line is that buying more compute makes more revenue. Inferred from S001, S004, S010, S012, S013, S014.
@@ -100,7 +105,7 @@
 - 2026-06-01: "If the life of the asset is long, the TCO is low." (S014)
 
 ## Open models
-- **Stance:** Keep open models near the frontier, post-train them, and publish the next generation for as long as he is doing this. The customer's data stays the customer's. One model will not serve every industry. America, in his Washington telling, needs strong open models beside strong proprietary ones. Inferred from S010, S011, S012, S013, S014.
+- **Stance:** Keep open models near the frontier, post-train them, and publish the next generation for as long as he is doing this. The customer's data stays the customer's. One model will not serve every industry. America, in his Washington telling, needs strong open models beside strong proprietary ones. Buying Hugging Face, in the 2026 letter, does not make NVIDIA compute a requirement on that platform. Inferred from S010, S011, S012, S013, S014, S026.
 - 2025-03-25: "today we're announcing that Groot N1 is open sourced" (S010)
 - 2025-06-11: "we take those models open sourced, we then post-train it." (S011)
 - 2025-06-11: "I will do this for as long as I shall live." (S011)
@@ -110,6 +115,9 @@
 - 2026-03-20: "We are at the frontier on every single one." (S013)
 - 2026-06-01: "We open the model, we open the data, and we even open how we trained it" (S014)
 - 2026-06-01: "We're completely dedicated to this." (S014)
+- 2026-09-03: "Hugging Face will remain an open platform for the entire AI ecosystem." (S026)
+- 2026-09-03: "NVIDIA compute will not be required to build on or deploy through Hugging Face." (S026)
+- 2026-09-03: "open weights broaden access to AI and help ensure that AI leadership is distributed across companies, institutions and communities." (S026)
 
 ## Sovereign AI
 - **Stance:** AI factories are national infrastructure. Start with the local language and the local partners, then grow out. He travels because countries are buying the stack. Inferred from S007, S009, S011, S013.
@@ -136,7 +144,8 @@
 - 2026-06-01: "People talk about AI reducing jobs, complete nonsense." (S014) More agents means more tool use, so he says software companies grow.
 
 ## Physical AI
-- **Stance:** After agents, the wave is AI that acts in the world. It needs three computers: one to train, one to simulate, one inside the machine. Robots are held back by programming cost, and data is the hard part. The arrival claim is about cars. Inferred from S002, S007, S008, S010, S011, S012, S013, S014.
+- **Stance:** After agents, the wave is AI that acts in the world. It needs three computers: one to train, one to simulate, one inside the machine. Robots are held back by programming cost, and data is the hard part. The arrival claim is about cars. Inferred from S002, S007, S008, S010, S011, S012, S013, S014, S016.
+- 2016-10-24: "Intelligent machines powered by AI computers that can learn, reason and interact with people are no longer science fiction." (S016)
 - 2022-03-22: "The next wave of AI is robotics, where AI will also plan and act." (S002)
 - 2024-03-18: "except the chat GPT moment for robotics may be right around the corner" (S007)
 - 2024-03-18: "we're going to need three computers." (S007)
@@ -150,8 +159,9 @@
 - 2026-06-01: "For physical AI, compute is data." (S014)
 
 ## Energy and power
-- **Stance:** Power caps the factory, so revenue is tokens per watt. Accelerate every workload you can, put the rest on CPUs, and spend the saved watts on compute. Inferred from S004, S007, S008, S010, S012, S013, S014.
+- **Stance:** Power caps the factory, so revenue is tokens per watt. Accelerate every workload you can, put the rest on CPUs, and spend the saved watts on compute. Energy is the first principle of the infrastructure. Inferred from S004, S007, S008, S010, S012, S013, S014, S022.
 - 2023-03-21: "First and foremost, data centers must accelerate every workload." (S004)
+- 2026-03-10: "Energy is the first principle of AI infrastructure and the binding constraint on how much intelligence the system can produce." (S022)
 - 2023-03-21: "Acceleration will reclaim power. The energy saved can fuel new growth. Whatever is not accelerated will be processed on CPUs." (S004)
 - 2024-03-18: "Our goal is to continuously drive down the cost and the energy." (S007)
 - 2024-06-02: "Our token generation performance has made it possible for us to drive the Energy down by 45000x." (S008)
@@ -172,7 +182,9 @@
 - 2026-03-20: "This chart basically describes 100% of NVIDIA's strategies." (S013) The chart is the CUDA install-base flywheel.
 
 ## AI
-- **Stance:** AI is a new way to write software and a new platform in the line of the PC, the internet, mobile, and cloud. It is the work, and a general-purpose CPU is a bad machine for it. The category started from zero. Inferred from S001, S002, S004, S006, S007, S010.
+- **Stance:** AI is a new way to write software and a new platform in the line of the PC, the internet, mobile, and cloud. It is the work, and a general-purpose CPU is a bad machine for it. The category started from zero. Inferred from S001, S002, S004, S006, S007, S010, S015.
+- 2016-01-12: "For as long as we have been designing computers, AI has been the final frontier." (S015)
+- 2016-01-12: "As it turned out, 12 NVIDIA GPUs could deliver the deep-learning performance of 2,000 CPUs." (S015)
 - 2021-11-09: "AI is a new way to write software, and inference is running the software written by AI." (S001)
 - 2022-03-22: "AI has fundamentally changed what software can make and how you make software." (S002)
 - 2023-03-21: "Generative AI is a new computing platform like PC, internet, mobile, and cloud." (S004)
@@ -192,7 +204,7 @@
 - 2026-03-20: "Inference is ultimate hard, and it's also ultimate important because it drives your revenues." (S013)
 
 ## Metrics
-- **Stance:** Once the data center is a factory, the numbers that matter are throughput, tokens per second per user, utilization, and tokens per watt. Those are the revenue. Inferred from S007, S008, S010, S011, S013, S014.
+- **Stance:** Once the data center is a factory, the numbers that matter are throughput, tokens per second per user, utilization, and tokens per watt. Those are the revenue. Inferred from S007, S008, S010, S011, S013, S014, S022, S024, S025.
 - 2024-03-18: "So your throughput dictates the cost of delivering the service." (S007)
 - 2024-06-02: "Your throughput directly correlates to your revenues" (S008)
 - 2025-03-25: "your goal is to maximize the area under the curve" (S010)
@@ -200,9 +212,13 @@
 - 2025-06-11: "If the utilization of that factory is not at its fullest, the cost to the factory owner is going to be incredible." (S011)
 - 2026-03-20: "you will be studying the throughput and the token speed of your AI factories" (S013)
 - 2026-06-01: "Compute is revenue now. Compute is profit." (S014)
+- 2026-03-10: "These systems are AI factories. They are not designed to store information. They are designed to manufacture intelligence." (S022)
+- 2026-08-11: "In AI, compute is revenue." (S024)
+- 2026-08-17: "In the AI economy, compute is revenue." (S025)
 
 ## Digital twins
-- **Stance:** Anything physical that software will run at scale gets built, tested, and operated as a twin first. The same rule covers the robot and the AI factory. Inferred from S003, S007, S010, S011, S014.
+- **Stance:** Anything physical that software will run at scale gets built, tested, and operated as a twin first. The same rule covers the robot and the AI factory. Inferred from S003, S007, S010, S011, S014, S021.
+- 2021-11-12: "To make our future a reality today, simulation is the answer." (S021)
 - 2022-09-20: "No physical product operated by software can be deployed in large numbers without testing the software on its digital twin." (S003)
 - 2024-03-18: "How else would you test the software?" (S007)
 - 2025-03-25: "before you build a data center you have to build a digital twin" (S010)
@@ -213,13 +229,39 @@
 - **Stance:** The consumer brand is how the platform recruits the next developers, years before they can pay. Inferred from S013.
 - 2026-03-20: "GeForce is NVIDIA's greatest marketing campaign." (S013) Parents paid. The kids became the developers. CUDA rode on that install base.
 
+## Raising money
+- **Stance:** He does not describe selling NVIDIA shares, and he does not describe a founder's round. In 2026 the money that stands up AI factories is third-party capital, and he says that capital is not NVIDIA revenue. Inferred from S024.
+- 2026-08-11: "In AI, compute is revenue." (S024)
+- 2026-08-11: "The more than $500 billion figure represents aggregate third-party capital that these platforms are designed to mobilize over time" (S024)
+- 2026-08-11: "the capital is not NVIDIA revenue, a single fund or a commitment to a single customer." (S024)
+
+## Acquisitions
+- **Stance:** Buy the company that removes the bottleneck, and keep the platform open after the deal. The corpus records the agreements. It does not say what happened to the Arm agreement after the announcement. Inferred from S017, S018, S019, S026.
+- 2020-04-30: "Our journey started in my hotel room at SC18 on November 18, 2018." (S017)
+- 2020-04-30: "I told him that NVIDIA would be the final and highest bidder." (S017)
+- 2020-04-30: "When NVIDIA accelerates compute by 10-50x, moving data becomes the bottleneck." (S017)
+- 2020-09-13: "Today, we announced that we have signed a definitive agreement to purchase Arm." (S018)
+- 2020-09-13: "NVIDIA will bring our world-leading AI technology to Arm's ecosystem while expanding NVIDIA's developer reach from 2 million to more than 15 million software programmers." (S018)
+- 2020-09-13: "With this newly announced combination, we are creating the leading computing company for the age of AI." (S019)
+- 2026-09-03: "I'm excited to announce that NVIDIA has agreed to acquire Hugging Face for $12,930,300,000." (S026)
+
+## Custom silicon
+- **Stance:** When the bus is the bottleneck, build the CPU that speaks the accelerator's link. Do not put an extreme workload on a general-purpose computer. An ASIC that only runs AI still leaves the rest of the data center behind. That competition line is above. Inferred from S020, S023.
+- 2021-04-12: "Today, we're announcing our first data center CPU, Project Grace, named after Grace Hopper, a computer scientist and U.S. Navy rear Admiral, who in the '50s pioneered computer programming." (S020)
+- 2021-04-12: "This powerful, Arm-based CPU gives us the third foundational technology for computing" (S020)
+- 2026-05-13: "Why would you use a general purpose computer to go do that?" (S023)
+
+## Workforce
+- **Stance:** The factory buildout needs skilled trades, and a computer-science PhD is not the ticket. He does not say who the first hire is, who to fire, or how to pay them. Inferred from S022.
+- 2026-03-10: "You do not need a PhD in computer science to participate in this transformation." (S022)
+
 ## No recorded position
 
-These spec topics are absent from these keynotes. One line each.
+These spec topics are absent from these sources. One line each.
 
 - Discounting: No recorded position.
-- Raising money: No recorded position.
-- Debt: No recorded position.
+- Debt: No recorded position. S025 describes labs that outgrow their own credit. He does not say to borrow.
+- Export controls: No recorded position.
 - First hire: No recorded position.
 - Firing: No recorded position.
 - Equity: No recorded position.

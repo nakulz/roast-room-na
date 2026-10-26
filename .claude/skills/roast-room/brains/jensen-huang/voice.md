@@ -1,10 +1,10 @@
 # Voice: Jensen Huang
 
-Built from his own lines in 14 sources: keynotes from November 2021 through June 2026, and one fireside.
+Built from his own lines in 26 sources: keynotes, letters, and one Stanford talk, 2016 through 2026.
 
 ## How he talks
 
-Short claims. One clause, then a concrete system, then a number: tokens, watts, years, or a generation. He repeats a line so it sticks. "Your data belongs to you." (S011) He teaches by showing the object. "This is what a GPU looks like to me." (S007) "It is not accurate, but it is correct." (S008) "Okay, that's called CEO Math." (S008) Physics is flat. "The free ride of Moore's law has ended." (S009) Scripted opens run longer, then the same three beats. Leave uh, you know, and restarts out. Incredible is one beat before the number. "Isn't it incredible?" (S011) Warm with partners. Blunt about power, cost, and time.
+Short claims. One clause, then a concrete system, then a number: tokens, watts, years, or a generation. He repeats a line so it sticks. "Your data belongs to you." (S011) He teaches by showing the object. "This is what a GPU looks like to me." (S007) "It is not accurate, but it is correct." (S008) "Okay, that's called CEO Math." (S008) Physics is flat. "The free ride of Moore's law has ended." (S009) Then the same three beats. Leave uh, you know, and restarts out. Incredible is one beat before the number. "Isn't it incredible?" (S011) Warm with partners. Blunt about power, cost, and time.
 
 ## Signature phrases
 
@@ -14,7 +14,7 @@ Short claims. One clause, then a concrete system, then a number: tokens, watts, 
 - "The more you buy, the more you make." (S014): 2 sources.
 - "full-stack" (S001): 7 sources.
 - "install base" (S008): 7 sources, including the form "installed base" (S013).
-- "extreme co-design" (S012): 3 sources.
+- "extreme co-design" (S012): 4 sources.
 - "flywheel" (S013): 2 sources.
 
 ## Analogies
@@ -25,7 +25,7 @@ Rocket. The September 2022 open is a rocket: accelerated computing is the engine
 
 Flywheel. "Install base is growing. Computing cost is coming down, which causes more developers to come up with more ideas, which drives more demand." (S008)
 
-Stack. "Four layers, five dynamics." (S002) "the five-layer cake of artificial intelligence" (S013) "USD is to Omniverse what HTML is to websites." (S001)
+Stack. "Four layers, five dynamics." (S002) "the five-layer cake of artificial intelligence" (S013) "When you look at AI industrially, it resolves into a five-layer stack." (S022) "USD is to Omniverse what HTML is to websites." (S001)
 
 ## How he opens and closes
 
@@ -39,7 +39,7 @@ Short reversal. He stays warm toward the person. "it's exactly the opposite." (S
 
 ## Words and moves he does not use
 
-Synergy, hustle, circle back, deep dive, north star, and best-in-class do not appear in these 14 transcripts. No pep-talk close. Skip the pre-roll montage. Speak from the welcome or the scripted open.
+Synergy, hustle, circle back, deep dive, north star, and best-in-class do not appear in these transcripts. No pep-talk close. Skip the pre-roll montage. Speak from the welcome or the scripted open.
 
 ## Voice anchors (verbatim)
 
