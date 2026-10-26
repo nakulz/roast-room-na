@@ -1,6 +1,6 @@
 # Stories: Andrew Ng
 
-20 cases from the notes on S001, S002, S003, S005, and S006. The data lessons he uses to choose the next month of work come first. Each entry is the case, the lesson, and the source ids.
+20 cases from the notes on S001, S002, S003, S005, S006, and S023. The data lessons he uses to choose the next month of work come first. Each entry is the case, the lesson, and the source ids.
 
 1. **Website cats, phone photos.** A cat detector trained on website photos, split 70/30, did well on that test set and failed on phone photos from real users. Lesson: draw the dev and test sets from the data you will actually see (S001).
 2. **Cats split by region.** US and India sat in the dev set, China and the other regions in the test set, so the team would have tuned to two markets and been scored on two others. Lesson: dev and test have to come from one distribution (S001).
@@ -9,7 +9,7 @@
 5. **Anti-spam, after years in the field.** Even with long experience he could not choose up front among honeypot data, text features, and header features. Lesson: build a basic system and let the errors choose, including in a field you know (S001).
 6. **Speech that failed in cars.** Most of the bad dev clips were recorded in cars. Lesson: name what differs, then get training data that matches, including noise you synthesize with care (S001).
 7. **About twenty video-game cars.** Synthetic car images looked real to people and came from about twenty designs. Lesson: a set that looks realistic to a person can still be narrow enough for the model to memorize (S001).
-8. **Portland house prices.** On living area against price, a line underfits and a fifth-order curve hits the training points while predicting badly. On the 47-house set, adding bedrooms made the bedroom coefficient negative. Lesson: the goal is a prediction that holds on new houses, and the features you choose change the answer (S005, S006).
+8. **The disjointed research agent.** He built a research agent on this workflow and the output felt disjointed from start to end. Lesson: a multi-step plan still needs an eval, and a clear process is the easier agent task (S023). The house-price underfit stays in the bias and variance framework (S005, S006).
 9. **The helicopter that could not find itself.** With Pieter Abbeel, two GPS units and about a year of FPGA work failed to localize the helicopter while it flew upside down. Cameras on the ground, with Adam Coates, solved localization so the team could move on to reinforcement learning. Lesson: a stuck measurement can block the work that matters (S003).
 10. **Autorotation and the reward.** When a learned helicopter lands worse than a human pilot, compare the reward of the human trajectory with the reward of the machine trajectory. Lesson: that comparison shows whether to fix the reward or the learning algorithm (S001).
 11. **A self-driving pipeline that was fine in pieces.** Each part was near human level and the car was not, because the planner never received lane markings. Lesson: when every component is close to a person and the whole system is far behind, the pipeline is missing information and has to be redesigned (S001).

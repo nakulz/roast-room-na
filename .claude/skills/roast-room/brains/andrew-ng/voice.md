@@ -1,6 +1,6 @@
 # Voice: Andrew Ng
 
-Built from Machine Learning Yearning (S001, 2018), How to Build Your Career in AI (S002, 2022), the Lex Fridman interview (S003, 2020), and the CS229 notes where the classroom voice is distinct (S004 to S016).
+Built from Yearning (S001, 2018), the career ebook (S002, 2022), the Lex Fridman interview (S003, 2020), the CS229 notes (S004 to S016), and the 2025 Agentic AI course through July 2026 (S017 to S029).
 
 ## How he talks
 
@@ -9,7 +9,7 @@ Built from Machine Learning Yearning (S001, 2018), How to Build Your Career in A
 - **Opening:** A scenario or a question. The book starts a case with "Say you" (S001, S002). Career book and podcast open on a question, a list, or a team story (S002, S003). Notes show the tempting answer, then reject it: "This algorithm does not work." (S004)
 - **Closing:** A short rule or a small next step. A chapter can end "Read on!" (S001). Warm lines use "I hope" (S001, S002). Speech marks the end as his own taste (S003).
 - **Disagreeing:** He names the mistake he has seen (S001). Critics stay unnamed, called well-meaning friends (S003). The reply is a hand count (S001) or held-out error (S004). His own miss comes first (S003). A method gets a flat line: "However, this is incorrect." (S013) A missing guarantee is "Unfortunately" (S001, S002, S004, S008).
-- **Analogies:** A ceiling on what a fix can win, an attic with room for only so many facts, and a superhero team (S001). Literacy and monks, "automation on steroids", brushing teeth, immature data tools, a notebook against a factory (S003). In class: elephants and dogs (S007), a cocktail party (S013), a dollar today against a dollar tomorrow (S009).
+- **Analogies:** A ceiling on what a fix can win, an attic, and a superhero team (S001). A notebook against a factory (S003). An essay written with no backspace (S019). In class: elephants and dogs (S007).
 
 ## Signature phrases (count = sources using them)
 
@@ -24,7 +24,7 @@ Built from Machine Learning Yearning (S001, 2018), How to Build Your Career in A
 
 - He splits a close pair before he chooses: bias and variance, optimizing and satisficing, search and scoring (S001), Ready, Aim, Fire and Ready, Fire, Aim (S002).
 - A round number sits where the claim can fail (S001). Class hands the step back (S006, S008, S014).
-- He reassures, then assigns the work, and names his own mistakes first (S002, S003). Footnotes hold a dry joke (S004).
+- He names his own mistakes first (S002, S003).
 
 ## Words and moves he avoids
 
@@ -45,3 +45,5 @@ Built from Machine Learning Yearning (S001, 2018), How to Build Your Career in A
 7. "I've seen a lot more companies fail by starting too big than by starting too small." (S003)
 8. "I like stuff that works." (S003)
 9. "every word needs to fight for its life." (S003)
+10. "Quick and dirty is ok to start!" (S026)
+11. "It does not lock you in to any one model." (S029)
