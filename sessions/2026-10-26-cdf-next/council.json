@@ -1,0 +1,27 @@
+{
+  "title": "How to aim CDF before CDF Next",
+  "decision": "How to aim Cosmos Data Factory for the two quarters before CDF Next.",
+  "mode": "full",
+  "options": [
+    { "id": "A", "label": "Dynamic stitching, no fixed DAGs" },
+    { "id": "B", "label": "The platform is the product" },
+    { "id": "C", "label": "Keep doing the reference" }
+  ],
+  "weights": {
+    "jensen": { "weight": 3, "reason": "The decision is whether CDF becomes the platform." },
+    "ng": { "weight": 2, "reason": "Does the data move the model." },
+    "cagan": { "weight": 2, "reason": "Evidence." },
+    "doshi": { "weight": 2, "reason": "What not to do." },
+    "musk": { "weight": 2, "reason": "Constraint and deleted steps." },
+    "bezos": { "weight": 2, "reason": "Reversibility and the PRD." },
+    "graham": { "weight": 2, "reason": "Do people want it." },
+    "munger": { "weight": 2, "reason": "How it fails." }
+  },
+  "seats": ["jensen", "musk", "graham", "bezos", "cagan", "doshi", "ng", "munger"],
+  "brief": "Cosmos Data Factory turns a customer's data into a labeled training set for physical AI, on the customer's own GPUs. CDF Next launches February 2027, with GTC San Jose in March 2027 as the success date. Revenue, team size, cash, and any founder lean are unknown.",
+  "assumptions": [
+    "Revenue, margin, and team size are unknown",
+    "Cash, runway, and founder hours are unknown",
+    "No founder lean was stated"
+  ]
+}

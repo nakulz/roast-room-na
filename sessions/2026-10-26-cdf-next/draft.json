@@ -1,0 +1,19 @@
+{
+  "option": "C",
+  "label": "RESHAPE",
+  "recommendation": "Keep the five blueprints as the product through GTC. Spend the two quarters on one counted test, and do not start dynamic-only stitching or the four-part platform unless that test passes.",
+  "conditions": [
+    "All five blueprints still run at GTC, March 2027",
+    "By 1 Nov 2026, tag about 20 misses on one blueprint before any roadmap change",
+    "By 30 Nov 2026, count external teams that ran a blueprint on their GPUs in the prior 30 days",
+    "Stitching stays closed unless, by 31 Jan 2027, one outside team has run that blueprint twice and at least 50 of 100 misses are the fixed DAG",
+    "No four-part platform and no second vertical before that January result"
+  ],
+  "next_steps": [
+    "By 1 Nov 2026: tag about 20 misses on AV or defect",
+    "By 30 Nov 2026: count external blueprint runners; zero means one hand install and no new system",
+    "On 31 Jan 2027: apply the 50-of-100 gate; if it fails, ship the five fixed blueprints"
+  ],
+  "cheapest_test": "Tag about 20 misses on one blueprint this week and write whether anyone outside the team ran it.",
+  "kill_criteria": "If the 31 Jan 2027 share is under 50 of 100, or no outside team has run the blueprint twice, ship the five fixed blueprints and do not start A or B."
+}

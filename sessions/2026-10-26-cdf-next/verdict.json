@@ -1,0 +1,116 @@
+{
+  "label": "GO WITH CONDITIONS",
+  "call": "Keep the five fixed blueprints as what CDF ships through GTC San Jose in March 2027. Spend the two quarters counting, on one blueprint, how many downstream misses come from the DAG being fixed. A pass on 31 January 2027 reopens A and narrow B and does not start either one.",
+  "recommended": "C",
+  "why": [
+    {
+      "point": "The gate is 50 of 100 downstream misses on the blueprint a team already runs, counted before any stitch.",
+      "seat": "Ng",
+      "framework": "Error analysis"
+    },
+    {
+      "point": "Deleting the five before GTC, or shipping four new surfaces into that date, is the door the room refused.",
+      "seat": "Bezos",
+      "framework": "Type 1 and Type 2"
+    },
+    {
+      "point": "The two quarters hold one bet, the count on one blueprint, and the platform stays off the list.",
+      "seat": "Doshi",
+      "framework": "Opportunity cost"
+    }
+  ],
+  "minority": {
+    "seat": "Jensen",
+    "quote": "The 31 January gate allows a stitch beside fixed AV on one GPU box only after a samples-per-watt win and 20 of 100 locked misses, with one partner taking one skill and keeping their data, and it leaves 50 of 100 as the bar to reopen A or full B.",
+    "would_have_to_be_true": "A side-by-side on one GPU box wins on evaluator-passed samples per watt, at least 20 of 100 misses are the fixed DAG, AV still runs, and one partner takes one skill and keeps their data."
+  },
+  "next_steps": [
+    {
+      "when": "By 1 November 2026",
+      "action": "Tag about 20 misses on AV or defect before any roadmap change."
+    },
+    {
+      "when": "By 30 November 2026",
+      "action": "Count external teams that ran a blueprint on their own GPUs. Zero means one hand install and no new system."
+    },
+    {
+      "when": "On 31 January 2027",
+      "action": "Apply the 50-of-100 gate. If it fails, the February 2027 launch ships the five fixed blueprints."
+    }
+  ],
+  "kill_criteria": "A missing 31 January 2027 count, a fixed-DAG share under 50 of 100, or no outside double run means the February 2027 launch and GTC ship the five fixed blueprints, with no stitch and no platform build.",
+  "conditions": [
+    "All five blueprints still run on customer GPUs at GTC San Jose in March 2027",
+    "By 1 November 2026, tag about 20 misses on one blueprint before any roadmap change",
+    "By 30 November 2026, count external blueprint runners; zero means one hand install and no new system",
+    "By 31 January 2027, 50 of 100 misses on the fixed blueprint are the DAG, with a double outside run, a blocked customer, and hours left, before any reopen",
+    "A pass reopens A and narrow B and starts neither"
+  ],
+  "fights": [
+    {
+      "crux": "Do the five fixed blueprints stay runnable through GTC?",
+      "story": "Elon opened by deleting fixed DAGs. Jensen and Bezos called the five the install base and a one-way door. Elon kept one as a control in Round 2. In Round 3 every seat keeps all five."
+    },
+    {
+      "crux": "Is the two-quarter product the platform or one path?",
+      "story": "Jensen and Bezos opened on a narrowed B. The other six left the platform unbuilt. Bezos moved his top score to C. Jensen still scores B at 6, so a partner taking one skill waits. These two quarters are the count."
+    },
+    {
+      "crux": "What has to move before the product changes?",
+      "story": "Bars ran from 20 of 100 to 50 of 100, plus a user who stays. The room took Ng's 50, counted on the fixed blueprint before a prototype. A pass reopens the council and does not start a stitch on 1 February."
+    }
+  ],
+  "amendments": [
+    {
+      "seat": "Jensen",
+      "amendment": "Allow a stitch beside AV after a samples-per-watt win and 20 of 100 misses, with one partner taking one skill, and leave 50 of 100 as the bar to reopen A or full B.",
+      "adopted": false,
+      "reason": "The five stay, and 50 of 100 stays the reopen bar. A side-by-side at 20, and a partner taking a skill in this window, stay off the plan."
+    },
+    {
+      "seat": "Elon",
+      "amendment": "On a 31 January pass, authorize the one-blueprint stitch on 1 February and leave narrow B closed.",
+      "adopted": false,
+      "reason": "The count is on the fixed blueprint before any prototype. A pass only reopens the council. Narrow B stays on that reopen."
+    },
+    {
+      "seat": "Graham",
+      "amendment": "No prototype off a single tag. Zero external teams means one hand install and nothing new. Reopen only after a double run, the first break fixed, and 50 of 100.",
+      "adopted": true,
+      "reason": "Ng, Doshi, and Munger made the same sequencing point, and the zero-count rule was already his condition."
+    },
+    {
+      "seat": "Bezos",
+      "amendment": "Start a prototype only when fixed-DAG misses are the largest class in the twenty, one named customer is blocked, and hours remain.",
+      "adopted": false,
+      "reason": "Largest class in the twenty was not taken. A blocked named customer and hours left did join the 31 January packet."
+    },
+    {
+      "seat": "Cagan",
+      "amendment": "Reopen on 31 January only when most of the six stay on the stitch.",
+      "adopted": false,
+      "reason": "The six-user stitch waits until the reference count is written. Most of the six staying is a condition before a stitch becomes the product."
+    },
+    {
+      "seat": "Doshi",
+      "amendment": "Count the locked 100 on the current blueprint first, with one owner on the not-do list through February 2027.",
+      "adopted": true,
+      "reason": "No seat objected. It is the same order Ng and Munger required."
+    },
+    {
+      "seat": "Ng",
+      "amendment": "Count the locked 100 on fixed-blueprint traces before any stitch prototype. One tag in the first 20 is a 5% share.",
+      "adopted": true,
+      "reason": "Graham, Doshi, and Munger joined it, and it answers the draft's one-tag prototype."
+    },
+    {
+      "seat": "Munger",
+      "amendment": "No prototype on one tag in the first twenty. A pass only reopens the council, and a stitch has to beat the reference.",
+      "adopted": true,
+      "reason": "The close rule and the reopen-only rule stand. The beat-the-reference run is the first test after a reopen."
+    }
+  ],
+  "cheapest_test": "By 1 November 2026, tag about 20 misses on one blueprint and write whether anyone outside the team has run it.",
+  "revisit": "31 January 2027, with the team count, the 100-miss share, whether a named customer is blocked, and whether any hours remain.",
+  "override_note": ""
+}

@@ -1,0 +1,29 @@
+{
+  "cruxes": [
+    {
+      "question": "Do the five fixed blueprints stay runnable through GTC?",
+      "sides": [
+        { "position": "Yes, they are the install base", "seats": ["Jensen", "Bezos", "Graham", "Doshi", "Ng", "Munger"] },
+        { "position": "No, agents already stitch them", "seats": ["Elon"] },
+        { "position": "Only if a user actually switches", "seats": ["Cagan"] }
+      ]
+    },
+    {
+      "question": "Is the two-quarter product the platform or one path?",
+      "sides": [
+        { "position": "The platform layer, narrowed", "seats": ["Jensen", "Bezos"] },
+        { "position": "One path, platform unbuilt", "seats": ["Elon", "Doshi", "Graham", "Ng", "Munger", "Cagan"] }
+      ]
+    },
+    {
+      "question": "What has to move before the product changes?",
+      "sides": [
+        { "position": "Samples per watt or GPU-hour", "seats": ["Jensen", "Elon"] },
+        { "position": "A named user would miss it", "seats": ["Graham", "Bezos", "Cagan", "Doshi", "Munger"] },
+        { "position": "Share of downstream errors", "seats": ["Ng"] }
+      ]
+    }
+  ],
+  "unanimous": false,
+  "note": "The room splits on whether fixed blueprints stay, and on platform versus one measured path."
+}
