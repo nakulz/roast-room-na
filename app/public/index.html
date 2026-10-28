@@ -108,10 +108,16 @@
       </div>
     </section>
 
-    <aside class="panel" aria-label="Key points">
-      <div class="panel-head" id="panelHead">Key points</div>
-      <div class="tabpanel" id="feed">
+    <aside class="panel" aria-label="Key points and research">
+      <div class="tabs" role="tablist">
+        <button type="button" id="tabPoints" role="tab" aria-selected="true" aria-controls="feed">Getting started</button>
+        <button type="button" id="tabResearch" role="tab" aria-selected="false" aria-controls="researchPanel">Research<span class="tab-dot" id="researchDot" hidden></span></button>
+      </div>
+      <div class="tabpanel" id="feed" role="tabpanel" aria-labelledby="tabPoints">
         <div class="empty">One line per seat as the council talks. Click a seat to read its full card.</div>
+      </div>
+      <div class="tabpanel" id="researchPanel" role="tabpanel" aria-labelledby="tabResearch" hidden>
+        <div class="empty">The shared packet shows up here when the Chair writes the agenda.</div>
       </div>
     </aside>
   </main>

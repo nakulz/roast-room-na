@@ -1,7 +1,7 @@
 ---
 name: roast-room
 description: Use when a founder wants a hard business decision debated by a council of world-class operators, says "roast room", "put this in the Roast Room", "founder council", "convene the council", "take this to the board", "what would Hormozi, Bezos, or Buffett say", "should I do X", or can't make up their mind on pricing, hiring, raising money, a new product, a partnership, a pivot, an event, or spending. A board of sub-agents, each built from one expert's public work (Bezos, Paul Graham, Hormozi, Gary Vaynerchuk, Dan Martell, Gino Wickman, and Buffett out of the box, plus any seat added with /newroaster), argue it over three rounds, then a Chair returns a scored verdict, the reasoning, the dissent, and next steps. Also does a one-seat consult ("ask the Hormozi seat"). Not /roast (generic personas, idea validation).
-argument-hint: "[the decision] [--quick] [--all] [--seats hormozi,buffett,...] | ask <seat> [question] | board"
+argument-hint: "[the decision] [--quick] [--all] [--seats hormozi,buffett,...] | ask <seat> [question] | board | wait-what"
 ---
 
 ## What this does
@@ -18,6 +18,7 @@ Read once before the first run: `roster.json` (every seat and the default board)
 - **Everyone** (`--all`): every seat in `roster.json`, up to nine.
 - **Consult** (`ask <seat> ...`): one seat, one answer, using the single-seat prompt. No scoring, no session folder, no research packet, and no trip. Works for any seat in the roster.
 - **Board settings** (`board`): show and change who sits at the table by default. See "Board settings" below. No council runs.
+- **Simple verdict** (`/wait-what`): after a verdict exists, rewrite `verdict.md` in short sentences. Not a council, and not part of the run. See "Simple verdict" below.
 
 ## Pick the board
 
@@ -50,7 +51,7 @@ Show the recommendation in chat first, as a short list: each recommended seat wi
 
 The user can pick "Other" and type names to swap in or out ("recommended, but add Naval and drop Wickman"). Seat what they chose. When Step 1 also needs to ask about missing facts, put the board question in the same AskUserQuestion call so the user answers once. If the user said "just run it", seat the recommended board without asking.
 
-Tell the user who is at the table in one line when the council starts. The council starts when `council.json` is written, after any shared packet is frozen. `--seats`, `--all`, or `/roast-room board` change who sits.
+Tell the user who is at the table in one line when the council starts. The council starts when `council.json` is written. That file closes the baseline window: the shared packet plus any pre-Round-1 refinements, the same packet for every seat. `--seats`, `--all`, or `/roast-room board` change who sits.
 
 ## Step 1: The brief
 
@@ -66,7 +67,7 @@ Context lookup: if this project holds notes about the founder's business (a `CLA
 
 Keep the brief under 300 words. Mark every assumption as `(assumed)`.
 
-Seat the board (see "Pick the board"). Set a relevance weight per seat at the table (1 to 3) with a one-line reason, per `seats.md`. Create the session folder: `sessions/YYYY-MM-DD-<decision-slug>/` at the project root. Save `brief.md` (the brief, the options, and the weights table). Do not write `council.json` yet. The room stays on the idle table until that file lands.
+Seat the board (see "Pick the board"). Set a relevance weight per seat at the table (1 to 3) with a one-line reason, per `seats.md`. Create the session folder: `sessions/YYYY-MM-DD-<decision-slug>/` at the project root. Save `brief.md` (the brief, the options, and the weights table). Do not write `council.json` yet. Once `research/agenda.json` or `research/briefing.md` is saved, the room can show research in progress. Round 1 on the table still waits for `council.json`.
 
 Then frame the research, per `references/research.md`. At most five questions. Each names the option or score it can change, and whether it is an observation or a forecast. Every option is covered. Show that list and the exact budgets in `research.md`. Wait for the user to approve them. "Just run it" seats the board and fills a thin brief. It does not approve the budgets, and it does not raise them.
 
@@ -80,11 +81,23 @@ Write `research/agenda.json` first, with the approved items and the budgets as a
 
 The budgets recorded at approval are the caps. Six retrievals and 400 words of finding per item. A separate researcher stops at 10 turns. The sequential path has no researcher turns to cap. Twenty minutes for this pass is the user's watch. Nothing in this repo measures wall-clock.
 
-## Step 3: Freeze, then Round 1
+## Step 3: Baseline refinements
 
-Write `council.json` now (`live-room.md`). Tell the user once: "The room stays on the idle table until council.json lands. Watch it live at http://localhost:4730" (the room is optional and the council runs the same without it).
+Skip this step in quick mode, when there is no packet, and on a consult.
 
-Spawn every seat in **one message**, in parallel, foreground (`run_in_background: false`), `subagent_type: council-<seat>`, with the Round 1 prompt. If a `council-*` type is not registered in this session, use `general-purpose` with the fallback lines from `round-prompts.md`. Every seat gets the same packet. If there is no packet, say so in the prompt, and still do not invent a current fact.
+Spawn one short reply per seat, in one message, with the baseline request prompt. Each seat reads the shared packet and answers `GAP / RAISED BY / WOULD CHANGE` or `none`. A seat may question a finding, disagree without a search, or add one missing aspect. Save the replies under `## Baseline` in `research/requests.md`. They are not a round and they do not go in a round file. A `## <Seat>` heading or a `SEAT:` line in a round file plays as a card.
+
+Gate the replies per `references/research.md`. Accept at most one item per seat. A disagreement with no search spends nothing. A named defect or one missing aspect can spend the trip. Reject duplicates, immaterial asks, bare distrust, and challenges that cite a brain instead of `sources.json`. A rejected reply is not replaced. The trip is not spent until you accept it.
+
+Run each accepted trip under the same six retrievals and 400 words. Notes go in `research/followups/` with `Window: baseline`. Keep the original briefing text. Append a correction only when a challenge ended `corrected`. Share every result with every seat. A challenge can also end `confirmed` or `unresolved`. A gap trip ends `found`, or leaves the gap unknown. Do not label every result a correction.
+
+The 10 minutes for intake plus follow-ups starts at this request pass. It covers the debate window too. It does not restart. Do not write `council.json` until this window is ready to close.
+
+## Step 4: Freeze, then Round 1
+
+Write `council.json` now (`live-room.md`). That file closes the baseline window. Unfinished trips are dropped: log them as still unknown before the file, and reject a late result. Round 1 reads only this frozen packet. Tell the user once: "Research is on the room as the packet lands. Round 1 starts when council.json lands. Watch it live at http://localhost:4730" (the room is optional and the council runs the same without it).
+
+Spawn every seat in **one message**, in parallel, foreground (`run_in_background: false`), `subagent_type: council-<seat>`, with the Round 1 prompt. If a `council-*` type is not registered in this session, use `general-purpose` with the fallback lines from `round-prompts.md`. Every seat gets the same frozen packet. If there is no packet, say so in the prompt, and still do not invent a current fact.
 
 When the cards come back, save them verbatim to `round-1.md`, one `## <Seat>` heading per card (the seat's `short` name from `roster.json`: Bezos, Graham, Hormozi, Gary V, and so on), and write the file right away so the room can start playing. Check each card has every field; send a card back once if it is missing scores or a stance. Then add a `## Chair notes` section at the bottom of `round-1.md`:
 
@@ -95,25 +108,19 @@ When the cards come back, save them verbatim to `round-1.md`, one `## <Seat>` he
 
 Do not write `cruxes.json` yet. A request does not go on a card and does not go in this file.
 
-## Step 4: Requests
+## Step 5: Debate refinements
 
-Skip this step in quick mode, and skip it when there is no packet.
+Skip this step in quick mode, when there is no packet, and when every seat already spent its trip.
 
-After `round-1.md` includes the Chair notes, spawn one short reply per seat, in one message, with the research-request prompt. Each seat reads `round-1.md`, including the Chair notes, and answers `GAP / RAISED BY / WOULD CHANGE` or `none`. Save the replies in `research/requests.md`. They are not appended to `round-1.md`. A `## <Seat>` heading or a `SEAT:` line in a round file plays as a card.
+After `round-1.md` includes the Chair notes, spawn one short reply for each seat that did not spend its trip, in one message, with the debate request prompt. The gap has to come from another seat's Round 1 card. The same gate applies: a named defect or one new aspect. Bare disagreement spends nothing. Save the replies under `## Debate` in `research/requests.md`. They are not appended to `round-1.md`.
 
-Gate the replies per `references/research.md`. Reject duplicates, immaterial asks, bare distrust, and challenges that cite a brain instead of `sources.json`. One accepted trip per seat. A challenge names an opened id and a concrete defect already in the packet. The defect list is not closed. Brain text is not a defect source. No browsing before the gate. A rejected reply is not replaced. Intake counts against the 10 minutes for intake plus follow-ups.
+Run each accepted trip the same way. Notes go in `research/followups/` with `Window: debate`. Append the result for every seat. Round 2 and Round 3 read it. It does not reopen Round 1. Keep the original briefing text. Append a correction only when a challenge ended `corrected`. A challenge can also end `confirmed` or `unresolved`. A gap trip ends `found`, or leaves the gap unknown. Do not label every result a correction.
 
-## Step 5: Close follow-ups
-
-Skip this step when no trip was accepted.
-
-Same six retrievals and same 400 words per trip. The 10 minutes for intake plus follow-ups already started at the request pass. It does not restart. No recursive delegation, no replacement trip, and no reset of the clock. A separate researcher stops at 10 turns. Notes go in `research/followups/`. Keep the original briefing text. Append a correction only when a challenge ended `corrected`. A challenge can also end `confirmed` or `unresolved`. Do not label every result a correction. Log a dropped trip, including a timeout or a late note, as still unknown. Reject a late result. The window is not reset.
-
-Every seat, including Round 3, then gets that same final packet.
+The 10 minutes already started at the baseline request pass. It does not restart. No recursive delegation, no replacement trip, and no second trip for a seat that already spent one. A separate researcher stops at 10 turns. Log a dropped trip, including a timeout or a late note, as still unknown. Reject a late result. The window is not reset.
 
 ## Step 6: Round 2, the draft, Round 3
 
-Write `cruxes.json` now (`live-room.md`). Publishing it closes the follow-up window. No research after this.
+Write `cruxes.json` now (`live-room.md`). Publishing it closes the debate window and starts the displayed Round 2. No research after this.
 
 Spawn every seat again, in one message, with the Round 2 prompt (it points them at `brief.md`, `round-1.md`, and the final packet). Save the cards to `round-2.md` (same `## <Seat>` headings, written as soon as the cards are back) with `## Chair notes`: who moved and why, which cruxes resolved, which numbers are still open, the interim option scores, and any current-world claim that is still unsupported or uncited. Leave the cards verbatim.
 
@@ -127,11 +134,32 @@ Quick mode skips this round when the Round 2 spread on the top option is 3 or le
 
 The support check happens before the next round, in the Chair notes of that round. This step is the pass over the finished prose, and the order is deliberate: the checkers scan the verdict itself. `verdict.json` is not published until that pass is done.
 
-1. Compute the numbers from the last round's cards per `scoring.md`, apply the overrides, and write `verdict.md` from `report-template.md`. Include the evidence section. Forecasts stay separate from observations.
+Write `verdict.md` as a decision memo, from `report-template.md`, with this lens every time:
+
+- Fidelity first. Do not invent evidence, owners, dates, metrics, or consensus. Label an inference, a forecast, an assumption, a user-supplied line, and an unknown. A research id is not stronger than the source it cites.
+- Lead with the decision in one sentence, then at most three supports. Keep every condition that would change the action. Keep the dissent.
+- Each next step has an action, an owner, and a time. If the evidence cannot support a call, say what is unknown.
+- Put the depth in the file. The chat verdict stays under 200 words: the label, the call, the scores, three reasons, the strongest objection, and at most three next steps.
+- Separate a proposed threshold from a measurement. The label and the scores still come from `scoring.md`.
+
+Do not run `/wait-what` in this step. Short sentences are a later request, not part of the council.
+
+1. Compute the numbers from the last round's cards per `scoring.md`, apply the overrides, and write `verdict.md` from `report-template.md`. Include the evidence section. Forecasts stay separate from observations. The decision is one sentence and names the option. The supports are at most three, each a point a seat actually made. Do not pad the list. Each next step names the action, the owner, and the time. If the record has no owner or no time, write unknown. Do not invent one. In `verdict.json`, `when` is the time and `action` includes the owner.
 2. Run `python .claude/skills/roast-room/scripts/check_quotes.py <session folder>` and `python .claude/skills/roast-room/scripts/check_research.py <session folder>` (try `python3` if `python` is missing). Both scan the completed session, including `verdict.md`. Remove any unverified brain quote from the verdict, and say so. Fix a research finding in the verdict: a missing id, a cite whose status is not opened, or a quote that does not match the record's excerpt. If Python is not installed, do not stop or ask the user to install it. Check each brain quote yourself by searching that seat's brain folder for the exact words, and check each research id and excerpt yourself against `research/sources.json` using the normalization in `check_quotes.py`.
 3. Run both checkers again after you edit the verdict. A finding that remains in a card is a finding, not a failed council. Leave the card verbatim. Do not rewrite a card to make a checker green. `verdict.json` may land while a card finding is still printed.
 4. Write `verdict.json` last (`live-room.md`). It repeats the checked verdict and adds no current-world claim the markdown does not already contain. It tells the room the council is over.
-5. Show the user a short verdict in chat, not the full report: the label and the call, the option scores on one line, the three arguments that carried the room (one line each, with the seat), the strongest objection (one line, with the seat), and the next steps (at most three). Then the path to `verdict.md` for the full detail, one line saying the branded PDF is one click away ("Download PDF" on the verdict at http://localhost:4730), and one line offering a follow-up with any seat or a rerun with new facts. Keep it under 200 words: a founder should be able to decide from it at a glance.
+5. Show the user a short verdict in chat, not the full report: the label, the call, the option scores on one line, the three reasons (one line each, with the seat), the strongest objection (one line, with the seat), and at most three next steps. Then the path to `verdict.md` for the full detail, one line saying the branded PDF is one click away ("Download PDF" on the verdict at http://localhost:4730), and one line offering a follow-up with any seat or a rerun with new facts. Keep it under 200 words.
+
+## Simple verdict
+
+Do not run this during the council. Do not run it as part of Step 7. Run it only when the user says `/wait-what` or asks for a simple version of the verdict, and a `verdict.md` already exists.
+
+Rewrite that `verdict.md` in place. Short sentences. Same facts. No new point. A hyphen, not an em dash. Leave the label, the scores, the conditions, and the dissent. If a sentence is already inside the limit, leave it.
+
+- An instruction is 20 words or fewer. Instructions are the next steps, the conditions, the cheapest test, and the kill criteria.
+- A description is 25 words or fewer. Descriptions are the decision, the supports, the fights, and the evidence lines.
+
+Do not re-run the rounds. Do not write a new `verdict.json` for this rewrite. The scores do not change.
 
 ## Chair rules
 
@@ -139,7 +167,7 @@ The support check happens before the next round, in the Chair notes of that roun
 - Quote seats faithfully. Never put words in a seat's mouth or rewrite a card.
 - Seats speak in their expert's voice; your report is plain English that follows the house writing rules (no em dashes, no AI tells, no tee-ups).
 - Treat a unanimous Round 1 as a warning, not a win.
-- Cost: a full council with research is four sub-agent runs per seat (Round 1, the request reply, Round 2, Round 3), plus the researcher calls, which are capped by the agenda and the one-trip rule. Quick mode does not add a request reply or a seat trip. Use `--quick` for small calls, and say which mode you used.
+- Cost: a full council with research is up to five sub-agent runs per seat (a baseline request, Round 1, a debate request, Round 2, Round 3), plus the researcher calls, which are capped by the agenda and the one-trip rule. A seat files the debate request only when it did not spend its trip on the baseline. Quick mode does not add a request reply or a seat trip. Use `--quick` for small calls, and say which mode you used.
 - The seats are simulations built from public work. Never present a seat's line as something the real person said unless it is a verbatim quote with a source id from the brain.
 
 ## Board settings
@@ -157,12 +185,12 @@ To add a brand new advisor, use `/newroaster`.
 
 Run the same protocol sequentially yourself. Same files, same checkpoints. For the shared packet and for each accepted trip, do the retrieval yourself. There is no researcher turn cap on this path. The six retrievals, the 400-word finding, and the phase cutoff are the limit. Do not invent a second agent in the prose.
 
-For each seat in Round 1, read `.claude/agents/council-<seat>.md` and its brain, write that seat's card, then clear your head before the next seat: do not let one seat's card shape the next one's in Round 1. The request pass is the exception: each reply is written after `round-1.md` is complete, so it can answer another seat, and it still goes in `research/requests.md` as one short reply. Rounds 2 and 3 work with the prior cards and the same final packet in view.
+For each seat in Round 1, read `.claude/agents/council-<seat>.md` and its brain, write that seat's card, then clear your head before the next seat: do not let one seat's card shape the next one's in Round 1. Two request passes are the exception, and both go in `research/requests.md` as one short reply per seat. The baseline replies are written from the packet, before `council.json`, before any Round 1 card exists. The debate replies are written after `round-1.md` is complete, only for a seat that did not spend its trip, so a reply can answer another seat. Rounds 2 and 3 work with the prior cards and the same packet, including any debate refinement that landed.
 
 ## Files
 
 - `brains/<slug>/`: one brain per seat (`_hot.md`, `frameworks.md`, `principles.md`, `positions.md`, `voice.md`, `stories.md`, `books.md`, `sources.md`).
-- `references/research.md`: agenda, budgets, ledger, briefing, the one trip, claim categories, and the CDF pilot.
+- `references/research.md`: agenda, budgets, ledger, briefing, the two freezes, the one trip, claim categories, and the CDF pilot.
 - `scripts/check_quotes.py`: verifies every attributed brain quote in a session against the brains.
 - `scripts/check_research.py`: checks that every R/F id exists, that its status is opened, and that a quoted passage matches that record's excerpt. It does not decide whether the passage supports the claim.
 - `roster.json`: every seat (key, name, pillar, the question it owns, scorecard dimension, color) and the default board. `/newroaster` adds seats; `/roast-room board` changes the board.

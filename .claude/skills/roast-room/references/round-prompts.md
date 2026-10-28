@@ -10,7 +10,7 @@ Paths in prompts are relative to the repo root; give the absolute repo root once
 
 **Pillar score.** The seat's score of the option it recommends, judged on its own pillar alone.
 
-**Research.** When the session has a packet, paste the research lines inside the round prompt. The request prompt is a separate reply after Round 1. It is not part of the Round 1 card. The rules are in `research.md`.
+**Research.** When the session has a packet, paste the research lines inside the round prompt. A baseline request is a separate reply before Round 1. A debate request is a separate reply after the Chair notes, and only for a seat that did not spend its trip. Neither reply is part of a card. The rules are in `research.md`.
 
 ---
 
@@ -23,7 +23,7 @@ Repo root: [absolute path]. You hold the [SEAT] seat ([pillar]). Read your brain
 
 Read the brief: [session folder]/brief.md
 
-RESEARCH: If [session folder]/research/briefing.md exists, read it and [session folder]/research/sources.json. Every seat has this same packet. Cite a current fact as (R001) only when that id is opened, or mark it assumption, inference, forecast, unknown, or user-supplied. A forecast stays a forecast. A brain id such as (S014) is not a current fact. If there is no packet, do not invent a current fact. Do not put GAP, RAISED BY, or WOULD CHANGE on this card.
+RESEARCH: If [session folder]/research/briefing.md exists, read it, including any Corrections appended after the original sections, [session folder]/research/sources.json, and every file already in [session folder]/research/followups/. This is the frozen packet. Every seat has the same one. Round 1 does not read a note that arrives after council.json. Cite a current fact as (R001) or (F001) only when that id is opened, or mark it assumption, inference, forecast, unknown, or user-supplied. A forecast stays a forecast. A brain id such as (S014) is not a current fact. If there is no packet, do not invent a current fact. Do not put GAP, RAISED BY, or WOULD CHANGE on this card.
 
 Your weight on this decision: [w]/3 ([one-line reason]).
 
@@ -61,7 +61,7 @@ Repo root: [absolute path]. You hold the [SEAT] seat. Read your brain's _hot.md 
 
 Read: [session folder]/brief.md and [session folder]/round-1.md (every seat's card and the Chair's cruxes).
 
-RESEARCH: Read the final packet, the same one every seat has. That is [session folder]/research/briefing.md, including any Corrections section appended after the original sections, [session folder]/research/sources.json, and every file in [session folder]/research/followups/. Cite an opened id as (R001) or (F001), or mark the claim assumption, inference, forecast, unknown, or user-supplied. A brain id such as (S014) is not a current fact. If there is no packet, do not invent a current fact.
+RESEARCH: Read the packet every seat has for this round. That is the frozen baseline plus any debate refinement that landed: [session folder]/research/briefing.md, including any Corrections section appended after the original sections, [session folder]/research/sources.json, and every file in [session folder]/research/followups/. Cite an opened id as (R001) or (F001), or mark the claim assumption, inference, forecast, unknown, or user-supplied. A brain id such as (S014) is not a current fact. If there is no packet, do not invent a current fact. Do not ask for another trip. Round 1 is not reopened.
 
 THE CRUXES THE CHAIR SEES
 1. [crux]: [seats on each side]. [If this seat is on one side, name the argument it must answer.]
@@ -93,7 +93,7 @@ ROAST ROOM COUNCIL, ROUND 3 OF 3: VOTE ON THE DRAFT RESOLUTION
 
 Repo root: [absolute path]. You hold the [SEAT] seat. You already argued this in two rounds; read only your _hot.md if you need it.
 
-Read: [session folder]/brief.md, your own section of [session folder]/round-2.md, [session folder]/draft-resolution.md, and the same final packet as every other seat: [session folder]/research/briefing.md (original sections plus any appended corrections), [session folder]/research/sources.json, and every file in [session folder]/research/followups/.
+Read: [session folder]/brief.md, your own section of [session folder]/round-2.md, [session folder]/draft-resolution.md, and the same packet as every other seat: [session folder]/research/briefing.md (original sections plus any appended corrections), [session folder]/research/sources.json, and every file in [session folder]/research/followups/, including a debate refinement.
 
 RESEARCH: Cite an opened id as (R001) or (F001), or mark the claim assumption, inference, forecast, unknown, or user-supplied. A brain id such as (S014) is not a current fact. If there is no packet, do not invent a current fact. Do not ask for research in this round.
 
@@ -110,24 +110,46 @@ ONE LINE FOR THE FOUNDER: the thing from your pillar they must not forget.
 
 ---
 
-## Research request (not a round)
+## Baseline request (not a round)
 
-One short reply per seat, after `round-1.md` includes the Chair notes, and only when a full council has a packet. Save the reply in `research/requests.md`. Do not write it into a round file.
+One short reply per seat, after the shared packet is written and before `council.json`, and only when a full council has a packet. Save the reply under `## Baseline` in `research/requests.md`. Do not write it into a round file. Round 1 has not started.
 
 ```
-ROAST ROOM COUNCIL, RESEARCH REQUEST. THIS IS NOT A ROUND.
+ROAST ROOM COUNCIL, BASELINE REQUEST. THIS IS NOT A ROUND.
 
 Repo root: [absolute path]. You hold the [SEAT] seat. Read your brain's _hot.md only if you need a phrase you already use. You still speak as the seat.
 
-Read: [session folder]/brief.md, [session folder]/research/briefing.md, [session folder]/research/sources.json, and [session folder]/round-1.md, including the Chair notes.
+Read: [session folder]/brief.md, [session folder]/research/briefing.md, and [session folder]/research/sources.json. Do not read a round file. There is not one yet.
 
-Answer in exactly this shape, or the single word none:
+You may question a finding, disagree without a search, or add one missing aspect, or none. Answer in exactly this shape, or the single word none:
 
+ASK: challenge | aspect | disagree | none
+GAP: one sentence. The fact you do not know, the opened id you challenge and the concrete defect, or the disagreement you are not asking anyone to search.
+RAISED BY: a packet id, or the briefing question.
+WOULD CHANGE: the option score or the objection that moves if this lands. "Nothing" is allowed when you are only disagreeing.
+
+ASK challenge names an id already in research/sources.json and a defect you can point at in that packet: a misquote, a wrong date, a scope or version mismatch, a conclusion the cited passage does not support, a contradiction with another opened record, or another concrete defect in an opened record. ASK aspect names one missing aspect. ASK disagree spends nothing: you are not asking for a search. Brain text is not a defect. You do not browse, fetch, or send a researcher. Your tools stay Read, Grep, and Glob. You have one trip for the whole council. Spending it here means you do not get one after Round 1.
+```
+
+## Debate request (not a round)
+
+One short reply, after `round-1.md` includes the Chair notes, and only for a seat that did not spend its trip on the baseline. The gap has to come from another seat's Round 1 card. Save the reply under `## Debate` in `research/requests.md`. Do not write it into a round file. This does not reopen Round 1.
+
+```
+ROAST ROOM COUNCIL, DEBATE REQUEST. THIS IS NOT A ROUND.
+
+Repo root: [absolute path]. You hold the [SEAT] seat. Read your brain's _hot.md only if you need a phrase you already use. You still speak as the seat. You did not spend your one trip before Round 1. This is the only trip you can still spend.
+
+Read: [session folder]/brief.md, [session folder]/research/briefing.md, [session folder]/research/sources.json, [session folder]/research/followups/, and [session folder]/round-1.md, including the Chair notes.
+
+The gap has to come from another seat's Round 1 card. A bare disagreement spends nothing. Answer in exactly this shape, or the single word none:
+
+ASK: challenge | aspect | none
 GAP: one sentence. The fact you do not know, or the opened id you challenge and the concrete defect.
-RAISED BY: the brief, a packet id, or a named seat's Round 1 claim.
+RAISED BY: a named seat's Round 1 claim.
 WOULD CHANGE: the option score or the objection that moves if this lands.
 
-A challenge names an id already in research/sources.json and a defect you can point at in that packet: a misquote, a wrong date, a scope or version mismatch, a conclusion the cited passage does not support, a contradiction with another opened record, or another concrete defect in an opened record. Brain text is not a defect. You do not browse, fetch, or send a researcher. Your tools stay Read, Grep, and Glob. This reply does not rewrite your Round 1 card.
+A challenge names an id already in research/sources.json and a defect you can point at in that packet: a misquote, a wrong date, a scope or version mismatch, a conclusion the cited passage does not support, a contradiction with another opened record, or another concrete defect in an opened record. An aspect is one missing fact that other seat's card made matter. Brain text is not a defect. You do not browse, fetch, or send a researcher. Your tools stay Read, Grep, and Glob. This reply does not rewrite your Round 1 card. The result, if the Chair accepts the trip, is appended for every seat for Rounds 2 and 3.
 ```
 
 ---

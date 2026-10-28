@@ -3,7 +3,9 @@
 // API runner emits, so the room plays a Claude Code council live without calling any API.
 //
 // Files the Chair writes, in order (spec: .claude/skills/roast-room/references/live-room.md):
-//   council.json  -> setup        round-1.md -> Round 1 cards   cruxes.json -> fault lines
+//   research/     -> research beat, before and during the council. The Chair does not write research.json.
+//   council.json  -> setup and the displayed Round 1. This also closes the baseline research window.
+//   round-1.md    -> Round 1 cards   cruxes.json -> fault lines and the displayed Round 2
 //   round-2.md    -> debate cards  draft.json -> proposal       round-3.md  -> votes
 //   verdict.json  -> the verdict
 import fs from "node:fs";
@@ -11,6 +13,7 @@ import path from "node:path";
 import { SEATS, byKey, parseCard, checkQuotes, loadRoster, defaultBoard, seatIn } from "./seats.mjs";
 import { SESSIONS_DIR } from "./env.mjs";
 import { optionScores, finalNumbers, verdictSeats, DISCLAIMER } from "./council.mjs";
+import { readPacket } from "./research-packet.mjs";
 
 const live = new Map(); // folder name -> session
 const STALE_MS = 3 * 60 * 60 * 1000; // a folder untouched this long is an abandoned council
@@ -47,11 +50,21 @@ export function splitCards(md) {
   }).filter((c) => c.key);
 }
 
-function emit(x, type, data = {}) {
-  const ev = { type, t: Date.now() - x.started, ...data };
-  x.events.push(ev);
+function fanout(x, ev) {
   const line = `data: ${JSON.stringify(ev)}\n\n`;
   for (const res of x.subs) res.write(line);
+}
+
+function emit(x, type, data = {}) {
+  const ev = { type, t: Date.now() - x.started, ...data };
+  // One research beat in the log, updated in place, so a reconnect still plays it
+  // before Round 1 and a live room sees the latest packet without a second copy.
+  if (type === "research") {
+    const prev = x.events.findIndex((e) => e.type === "research");
+    if (prev >= 0) { x.events[prev] = ev; fanout(x, ev); return; }
+  }
+  x.events.push(ev);
+  fanout(x, ev);
 }
 
 function finish(x, status) {
@@ -109,11 +122,30 @@ function readRound(x, r, force) {
   return false;
 }
 
+function syncResearch(x) {
+  const packet = readPacket(x.dir);
+  if (!packet) return;
+  const stamp = JSON.stringify(packet);
+  if (stamp === x.researchStamp) return;
+  const first = x.researchStamp == null;
+  x.researchStamp = stamp;
+  if (!x.title) x.title = packet.title;
+  if (first && x.step === "preface") {
+    emit(x, "phase", { phase: "research", label: "Research in progress", at: packet.at });
+  }
+  emit(x, "research", { packet, at: packet.at });
+}
+
 function sync(x) {
   const f = (n) => path.join(x.dir, n);
   const has = (n) => fs.existsSync(f(n));
   const st = x.st;
 
+  syncResearch(x);
+  if (x.step === "preface") {
+    if (!has("council.json")) return;
+    x.step = "setup";
+  }
   if (x.step === "setup") {
     const c = readJson(f("council.json"));
     if (!c) return;
@@ -179,14 +211,27 @@ function sync(x) {
 }
 
 function lastTouched(dir) {
-  try { return Math.max(...fs.readdirSync(dir).map((n) => fs.statSync(path.join(dir, n)).mtimeMs)); } catch { return 0; }
+  const times = [];
+  const walk = (d, depth) => {
+    let names;
+    try { names = fs.readdirSync(d); } catch { return; }
+    for (const n of names) {
+      const p = path.join(d, n);
+      let st;
+      try { st = fs.statSync(p); } catch { continue; }
+      times.push(st.mtimeMs);
+      if (st.isDirectory() && depth < 2) walk(p, depth + 1);
+    }
+  };
+  walk(dir, 0);
+  return times.length ? Math.max(...times) : 0;
 }
 
 function load(name) {
   const dir = path.join(SESSIONS_DIR, name);
   let x = live.get(name);
   if (!x) {
-    x = { id: name, dir, events: [], subs: new Set(), status: "running", started: Date.now(), step: "setup", title: "", mode: "full",
+    x = { id: name, dir, events: [], subs: new Set(), status: "running", started: Date.now(), step: "preface", title: "", mode: "full", researchStamp: null,
       st: { cards: { 1: {}, 2: {}, 3: {} }, scores: {}, rounds: [] } };
     live.set(name, x);
   }
@@ -197,10 +242,22 @@ function load(name) {
   return x;
 }
 
-/** Folders written by the skill (council.json, no events.json from the API runner). */
+function hasResearchStart(dir) {
+  return fs.existsSync(path.join(dir, "research", "agenda.json")) || fs.existsSync(path.join(dir, "research", "briefing.md"));
+}
+
+/** Skill folders: a council, or a research packet that has not reached council.json yet.
+ * events.json belongs to the API runner, which plays itself. */
 function skillFolders() {
   if (!fs.existsSync(SESSIONS_DIR)) return [];
-  return fs.readdirSync(SESSIONS_DIR).filter((d) => fs.existsSync(path.join(SESSIONS_DIR, d, "council.json")) && !fs.existsSync(path.join(SESSIONS_DIR, d, "events.json")));
+  return fs.readdirSync(SESSIONS_DIR).filter((d) => {
+    const dir = path.join(SESSIONS_DIR, d);
+    let st;
+    try { st = fs.statSync(dir); } catch { return false; }
+    if (!st.isDirectory()) return false;
+    if (fs.existsSync(path.join(dir, "events.json"))) return false;
+    return fs.existsSync(path.join(dir, "council.json")) || hasResearchStart(dir);
+  });
 }
 
 export function scan() {

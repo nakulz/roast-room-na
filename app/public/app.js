@@ -95,6 +95,7 @@ const ROUND_NAME = ["", "Opening", "Debate", "Vote"];
 const state = {
   seats: [], byKey: {}, board: [], table: [], session: null, options: [], weights: {}, active: [], round: 0,
   cards: { 1: {}, 2: {}, 3: {} }, replaying: false, verdict: null, links: [], geo: {}, setup: null, wait: null,
+  research: null,
 };
 
 // ------------------------------------------------------------- boot
@@ -265,6 +266,8 @@ function bindUI() {
   });
   $("#historyBtn").addEventListener("click", openHistory);
   $("#newBtn").addEventListener("click", reset);
+  $("#tabPoints").addEventListener("click", () => showTab("points"));
+  $("#tabResearch").addEventListener("click", () => showTab("research"));
   $("#verdictSheet").addEventListener("click", (e) => { if (e.target.id === "verdictSheet" || e.target.closest("[data-close]")) $("#verdictSheet").hidden = true; });
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") $("#verdictSheet").hidden = true; });
   // Clicking the dimmed backdrop around a card, the guide, or past sessions closes it (Escape already does).
@@ -321,10 +324,11 @@ const player = {
 function reset() {
   state.es?.close();
   player.reset();
-  Object.assign(state, { session: null, options: [], weights: {}, active: [], round: 0, cards: { 1: {}, 2: {}, 3: {} }, replaying: false, verdict: null, links: [], speaking: null, setup: null, wait: null });
+  Object.assign(state, { session: null, options: [], weights: {}, active: [], round: 0, cards: { 1: {}, 2: {}, 3: {} }, replaying: false, verdict: null, links: [], speaking: null, setup: null, wait: null, research: null });
   hideWait();
   $("#stage").classList.remove("live");
   $("#topic").hidden = true;
+  $("#options").innerHTML = "";
   $("#composer").hidden = state.runner !== "api";
   $("#waiting").hidden = state.runner === "api";
   $("#caption").hidden = true;
@@ -333,8 +337,10 @@ function reset() {
   $("#playbar").hidden = true;
   $("#newBtn").hidden = true;
   $("#verdictSheet").hidden = true;
-  $("#panelHead").textContent = "Getting started";
+  $("#tabPoints").textContent = "Getting started";
   $("#feed").innerHTML = GUIDE;
+  showTab("points");
+  clearResearchPanel();
   $$(".vote").forEach((b) => b.remove());
   renderSeats(state.board);
   $$(".seat").forEach((el) => { el.classList.remove("absent", "speaking", "thinking", "addressed"); $(".bust", el).dataset.shape = "base"; });
@@ -351,10 +357,9 @@ function begin(id) {
   $("#waiting").hidden = true;
   $("#newBtn").hidden = false;
   $("#playbar").hidden = false;
-  $("#panelHead").textContent = "Key points";
+  $("#tabPoints").textContent = "Key points";
   $("#feed").innerHTML = '<div class="empty">One line per seat as the council talks. Click a seat to read its full card.</div>';
   $("#stage").classList.add("live");
-  chairSays("The council is taking their seats", { dots: true });
 }
 
 function attach(id) {
@@ -389,15 +394,18 @@ async function handle(ev) {
   switch (ev.type) {
     case "phase": {
       state.wait = { phase: ev.phase, at: ev.at || Date.now() };
-      setStep(STEP_OF[ev.phase] || "setup");
+      const step = STEP_OF[ev.phase];
+      if (step) setStep(step);
       feedPhase(ev.label);
-      const thinking = ["setup", "cruxes", "draft", "verdict"].includes(ev.phase);
+      const thinking = ["setup", "cruxes", "draft", "verdict", "research"].includes(ev.phase);
       if (thinking || ev.phase === "skip3") {
-        chairSays(ev.label.replace(/^The Chair is /, "").replace(/^./, (c) => c.toUpperCase()), { dots: thinking });
+        const sub = ev.phase === "research" ? "Round 1 has not started. It starts when the packet is frozen." : "";
+        chairSays(ev.label.replace(/^The Chair is /, "").replace(/^./, (c) => c.toUpperCase()), { dots: thinking, sub });
         await player.sleep(1400);
       }
       break;
     }
+    case "research": applyResearch(ev); break;
     case "setup": state.setup = ev; await onSetup(ev); await player.sleep(1800); break;
     case "round_start": onRoundStart(ev.round); break;
     case "seat_start": $(`#seat-${ev.seat}`)?.classList.add("thinking"); break;
@@ -450,7 +458,7 @@ function onRoundStart(round) {
   state.links = [];
   drawLinks();
   $("#cruxes").hidden = true;
-  chairSays(`${["", "Round 1: opening positions", "Round 2: the debate", "Round 3: the vote"][round]}`, { dots: true, tag: "The floor is open" });
+  chairSays(`${["", "Round 1: opening positions", "Round 2: the debate", "Round 3: the vote"][round]}`, { dots: true, tag: "The floor is open", sub: packetBeat(state.research, "round" + round) });
 }
 
 // ------------------------------------------------------------- talking
@@ -513,14 +521,14 @@ function captionFor(who) {
   $("#capWho").textContent = s ? s.name : "The Chair";
 }
 
-function chairSays(text, { dots = false, tag = "" } = {}) {
+function chairSays(text, { dots = false, tag = "", sub = "" } = {}) {
   setSpeaker(null);
   captionFor(null);
   $("#capTag").textContent = tag;
   const p = $("#capText");
   p.className = "cap-text chair";
   p.innerHTML = esc(text) + (dots ? '<span class="dots"><i></i><i></i><i></i></span>' : "");
-  $("#capSub").textContent = "";
+  $("#capSub").textContent = sub || "";
 }
 
 async function speak(key, text, { tag = "", target = null, sub = "" } = {}) {
@@ -629,11 +637,13 @@ async function onCruxes(ev) {
   $("#caption").hidden = true;
   const c = $("#cruxes");
   c.hidden = false;
+  const fromPacket = cruxResearchLine(ev.cruxes);
   c.innerHTML = `<div class="head">${ev.unanimous ? "Too much agreement. The Chair pushes back." : "What they're fighting about"}</div>` +
-    ev.cruxes.map((x, i) => `<div class="crux" style="animation-delay:${i * 0.18}s"><b>${esc(x.question)}</b><div class="sides">${x.sides.map((sd) => `<span class="side"><span class="faces">${sd.seats.filter((k) => state.byKey[k]).map(face).join("")}</span>${esc(shorten(sd.position, 48))}</span>`).join("")}</div></div>`).join("");
+    ev.cruxes.map((x, i) => `<div class="crux" style="animation-delay:${i * 0.18}s"><b>${esc(x.question)}</b><div class="sides">${x.sides.map((sd) => `<span class="side"><span class="faces">${sd.seats.filter((k) => state.byKey[k]).map(face).join("")}</span>${esc(shorten(sd.position, 48))}</span>`).join("")}</div></div>`).join("") +
+    (fromPacket ? `<p class="r-from"><b>From the packet.</b> ${fromPacket}</p>` : "");
   const f = document.createElement("div");
   f.className = "feed-note";
-  f.innerHTML = `<b>The fight:</b> ${ev.cruxes.map((x) => esc(x.question)).join(" ")}`;
+  f.innerHTML = `<b>The fight:</b> ${ev.cruxes.map((x) => esc(x.question)).join(" ")}` + (fromPacket ? `<div class="r-from">${fromPacket}</div>` : "");
   feedAppend(f);
   await player.sleep(3500 + 1800 * ev.cruxes.length);
 }
@@ -663,6 +673,227 @@ function drawLinks() {
       const mx = (a.x + b.x) / 2, my = Math.min(y1, y2) - Math.min(90, Math.abs(a.x - b.x) * 0.22) - 10;
       return `<path class="${i < links.length - 1 ? "old" : ""}" d="M${a.x},${y1} Q${mx},${my} ${b.x},${y2}" stroke="${col}" marker-end="url(#arrow)"/>`;
     }).join("");
+}
+
+// ------------------------------------------------------------- research panel
+function showTab(which) {
+  const research = which === "research";
+  const feed = $("#feed");
+  const panel = $("#researchPanel");
+  if (!feed || !panel) return;
+  feed.hidden = research;
+  panel.hidden = !research;
+  $("#tabPoints")?.setAttribute("aria-selected", research ? "false" : "true");
+  $("#tabResearch")?.setAttribute("aria-selected", research ? "true" : "false");
+  const dot = $("#researchDot");
+  if (dot) dot.hidden = research || !state.research;
+}
+
+function clearResearchPanel() {
+  const panel = $("#researchPanel");
+  if (panel) panel.innerHTML = '<div class="empty">The shared packet shows up here when the Chair writes the agenda.</div>';
+  const dot = $("#researchDot");
+  if (dot) dot.hidden = true;
+}
+
+function kindLabel(k) {
+  const s = String(k || "").toLowerCase();
+  if (s === "forecast") return "Forecast";
+  if (s === "observation") return "Observation";
+  return "";
+}
+
+function windowLabel(w) {
+  if (w === "baseline") return "Baseline";
+  if (w === "debate") return "Debate";
+  return "";
+}
+
+function seatLabel(name) {
+  const key = seatKey(name);
+  return state.byKey[key]?.short || name || "Seat";
+}
+
+function locHtml(locator) {
+  const loc = String(locator || "").trim();
+  if (!loc) return "";
+  if (/^https?:\/\//i.test(loc)) return `<a href="${esc(loc)}" rel="noreferrer noopener">${esc(loc)}</a>`;
+  return esc(loc);
+}
+
+function openedFor(item, packet) {
+  const ids = new Set(item.openedIds || []);
+  return (packet.sources || []).filter((s) => s.status === "opened" && s.id && (ids.has(s.id) || (item.id && s.item === item.id)));
+}
+
+function sourceHtml(s) {
+  const loc = locHtml(s.locator);
+  const excerpt = s.excerpt ? `<q>${esc(shorten(s.excerpt, 280))}</q>` : "";
+  const claim = s.claim ? `<span>${esc(s.claim)}</span>` : "";
+  const limits = s.limits ? `<span class="muted">${esc(s.limits)}</span>` : "";
+  return `<div class="r-src"><b>${esc(s.id || "Opened")}</b> ${esc(s.title || "")}${loc ? `<div>${loc}</div>` : ""}${excerpt}${claim}${limits}</div>`;
+}
+
+function applyResearch(ev) {
+  const packet = ev.packet || null;
+  state.research = packet;
+  renderResearch(packet);
+  syncResearchNote(packet);
+  const onResearch = $("#tabResearch")?.getAttribute("aria-selected") === "true";
+  const dot = $("#researchDot");
+  if (dot) dot.hidden = onResearch || !packet;
+  if (!state.setup && packet?.title) {
+    $("#topic").hidden = false;
+    if ($("#topicTitle").textContent !== packet.title) $("#topicTitle").textContent = packet.title;
+  }
+}
+
+function renderResearch(packet) {
+  const panel = $("#researchPanel");
+  if (!panel) return;
+  if (!packet) { clearResearchPanel(); return; }
+  const items = packet.items || [];
+  const requests = packet.requests || [];
+  const followups = packet.followups || [];
+  const itemHtml = items.map((it) => {
+    const kind = kindLabel(it.kind);
+    const sources = openedFor(it, packet).map(sourceHtml).join("");
+    const opts = (it.options || []).length ? `<p class="muted">Options ${(it.options || []).map((o) => esc(o)).join(", ")}</p>` : "";
+    return `<article class="r-item">
+      <div class="r-kicker">${it.id ? `<span>${esc(it.id)}</span>` : ""}${kind ? `<span class="r-kind ${esc(it.kind)}">${esc(kind)}</span>` : ""}</div>
+      <h3>${esc(it.question || "Question")}</h3>
+      ${it.changes ? `<p>${esc(it.changes)}</p>` : ""}
+      ${opts}
+      <h4>Found</h4>
+      <p class="r-body">${esc(it.found || "Not in yet.")}</p>
+      <h4>Opened sources</h4>
+      ${sources || '<p class="muted">None opened yet.</p>'}
+      <h4>Still unknown</h4>
+      <p class="r-body">${esc(it.unknown || "Nothing logged.")}</p>
+    </article>`;
+  }).join("");
+  const closed = (packet.sources || []).filter((s) => s.status && s.status !== "opened");
+  const closedHtml = closed.length ? `<div class="r-sec"><h4>Not opened</h4>${closed.map((s) => `<p><b>${esc(s.status)}</b> ${esc(s.title || s.locator || "")}${s.note ? " " + esc(s.note) : ""}</p>`).join("")}</div>` : "";
+  const askHtml = requests.map((r) => {
+    const who = seatLabel(r.seat);
+    const win = windowLabel(r.window);
+    if (r.none) return `<article class="r-ask"><div class="r-kicker"><b>${esc(who)}</b>${win ? `<span>${esc(win)}</span>` : ""}<span>none</span></div></article>`;
+    const gate = r.gate ? `<span class="r-result ${r.gate === "accepted" ? "ok" : "open"}">${esc(r.gate)}</span>` : "";
+    return `<article class="r-ask">
+      <div class="r-kicker"><b>${esc(who)}</b>${win ? `<span>${esc(win)}</span>` : ""}${r.ask ? `<span>${esc(r.ask)}</span>` : ""}${gate}</div>
+      ${r.gap ? `<p><b>Gap.</b> ${esc(r.gap)}</p>` : ""}
+      ${r.raisedBy ? `<p><b>Raised by.</b> ${esc(r.raisedBy)}</p>` : ""}
+      ${r.wouldChange ? `<p><b>Would change.</b> ${esc(r.wouldChange)}</p>` : ""}
+      ${r.gateNote ? `<p class="muted">${esc(r.gateNote)}</p>` : ""}
+    </article>`;
+  }).join("");
+  const refHtml = followups.map((f) => {
+    const who = seatLabel(f.seat);
+    const win = windowLabel(f.window);
+    const result = f.result || "note";
+    const opened = (f.openedIds || []).map((id) => {
+      const src = (packet.sources || []).find((s) => s.id === id);
+      return src ? sourceHtml(src) : `<div class="r-src"><b>${esc(id)}</b></div>`;
+    }).join("");
+    return `<article class="r-back">
+      <div class="r-kicker"><b>${esc(who)}</b>${win ? `<span>${esc(win)}</span>` : ""}<span class="r-result ${/corrected|confirmed|found/.test(result) ? "ok" : "open"}">${esc(result)}</span></div>
+      ${f.asked ? `<p><b>Asked.</b> ${esc(f.asked)}</p>` : ""}
+      <h4>What came back</h4>
+      <p class="r-body">${esc(f.found || "No note yet.")}</p>
+      ${opened}
+      ${f.unknown ? `<p><b>Still unknown.</b> ${esc(f.unknown)}</p>` : ""}
+    </article>`;
+  }).join("");
+  const corrections = packet.corrections ? `<article class="r-back"><h4>Corrections appended to the briefing</h4><p class="r-body">${esc(packet.corrections)}</p></article>` : "";
+  const unknown = packet.stillUnknown ? `<article class="r-back"><h4>Still unknown</h4><p class="r-body">${esc(packet.stillUnknown)}</p></article>` : "";
+  const statusLine = {
+    progress: "The Chair is still gathering the packet. Round 1 has not started.",
+    packet: "Original packet. Round 1 starts when council.json lands.",
+    requests: "Seat requests are in. The original briefing is not rewritten.",
+    followups: "Shared refinements are appended. The original briefing stays as written.",
+  }[packet.status] || "Research.";
+  panel.innerHTML = `
+    <p class="r-status">${esc(statusLine)}</p>
+    <h4 class="r-sec-title">Original packet</h4>
+    ${itemHtml || '<p class="muted">No questions yet.</p>'}
+    ${closedHtml}
+    <h4 class="r-sec-title">Requests</h4>
+    ${askHtml || '<p class="muted">No seat has asked yet.</p>'}
+    <h4 class="r-sec-title">Shared refinements</h4>
+    ${refHtml || corrections || unknown ? refHtml + corrections + unknown : '<p class="muted">Nothing appended yet.</p>'}
+  `;
+}
+
+function syncResearchNote(packet) {
+  if (!packet || !$("#feed")) return;
+  let note = $("#research-live");
+  if (!note) {
+    note = document.createElement("div");
+    note.id = "research-live";
+    note.className = "feed-note";
+    feedAppend(note);
+  }
+  const items = (packet.items || []).filter((it) => it.found || it.question).slice(0, 5);
+  const lis = items.map((it) => {
+    const kind = kindLabel(it.kind);
+    return `<li><b>${esc(it.id || "Question")}${kind ? " · " + esc(kind) : ""}.</b> ${esc(shorten(clean(it.found || it.question), 140))}</li>`;
+  }).join("");
+  const refs = (packet.followups || []).slice(0, 4).map((f) => `<li><b>${esc(seatLabel(f.seat))} · ${esc(f.result || "note")}.</b> ${esc(shorten(clean(f.found || f.asked || f.unknown || ""), 120))}</li>`).join("");
+  note.innerHTML = `<b>Research.</b>${lis ? `<ul>${lis}</ul>` : ""}${refs ? `<ul>${refs}</ul>` : ""}`;
+}
+
+function packetRows(packet, phase) {
+  const debate = ["cruxes", "round2", "round3", "draft", "skip3", "verdict"].includes(phase);
+  const follow = packet.followups || [];
+  if (debate) {
+    const picked = follow.filter((f) => f.window === "debate" && (f.found || f.asked));
+    const rows = (picked.length ? picked : follow.filter((f) => f.found || f.asked)).map((f) => ({
+      label: [seatLabel(f.seat), f.result].filter(Boolean).join(" · "),
+      text: f.found || f.asked || "",
+      unknown: f.unknown || "",
+    }));
+    if (rows.length) return rows;
+    const asks = (packet.requests || []).filter((r) => !r.none && r.gap && r.window !== "baseline").map((r) => ({
+      label: [seatLabel(r.seat), r.gate || "asked"].filter(Boolean).join(" · "),
+      text: r.gap,
+      unknown: "",
+    }));
+    if (asks.length) return asks;
+  }
+  const baseFollow = follow.filter((f) => f.window !== "debate" && (f.found || f.asked)).map((f) => ({
+    label: [seatLabel(f.seat), windowLabel(f.window) || "Refinement", f.result].filter(Boolean).join(" · "),
+    text: f.found || f.asked || "",
+    unknown: f.unknown || "",
+  }));
+  const items = (packet.items || []).filter((it) => clean(it.found)).map((it) => ({
+    label: [it.id || "Question", kindLabel(it.kind) || "Question"].join(" · "),
+    text: it.found,
+    unknown: it.unknown || "",
+  }));
+  return [...items, ...baseFollow];
+}
+
+function packetBeat(packet, phase) {
+  if (!packet) return "";
+  const rows = packetRows(packet, phase).filter((r) => clean(r.text));
+  if (!rows.length) return "";
+  const row = rows[Math.floor(Date.now() / 7000) % rows.length];
+  const unknown = row.unknown ? " Still unknown: " + clean(row.unknown) : "";
+  return row.label + ". " + shorten(clean(row.text) + unknown, 200);
+}
+
+function cruxResearchLine(cruxes) {
+  const items = state.research?.items || [];
+  if (!items.length || !cruxes?.length) return "";
+  const bits = [];
+  for (const c of cruxes) {
+    const q = String(c.question || "").toLowerCase();
+    const hit = items.find((it) => String(it.question || "").toLowerCase().split(/[^a-z0-9]+/).filter((w) => w.length > 4).some((w) => q.includes(w)));
+    if (!hit || !clean(hit.found)) continue;
+    const kind = kindLabel(hit.kind);
+    bits.push(`${esc(hit.id || "Packet")}${kind ? " · " + esc(kind) : ""}. ${esc(shorten(clean(hit.found), 140))}`);
+  }
+  return bits.join(" ");
 }
 
 // ------------------------------------------------------------- feed + cards
@@ -800,6 +1031,7 @@ const SAME_TIME = "The advisors all write at the same time in Claude Code. Their
 function waitCopy(phase) {
   const n = state.setup?.mode === "quick" ? 2 : 3;
   return {
+    research: ["Research", "The Chair is gathering the shared packet.", "Round 1 has not started. It starts when the packet is frozen."],
     setup: ["Setting the table", "The Chair is seating the council.", ""],
     round1: ["Round 1 of " + n, "The advisors are writing their opening positions.", SAME_TIME],
     round2: ["Round 2 of " + n, "The advisors are reading each other's openings and firing back.", SAME_TIME],
@@ -838,10 +1070,11 @@ function tickWait() {
   }
   const [step, head, sub] = waitCopy(w.phase);
   const elapsed = Date.now() - w.at;
+  const beat = packetBeat(state.research, w.phase);
   $("#wcStep").textContent = step;
   $("#wcTime").textContent = clock(elapsed);
   $("#wcHead").textContent = head;
-  $("#wcSub").textContent = sub;
+  $("#wcSub").textContent = beat || sub;
   $("#wcNudge").hidden = elapsed < 4 * 60 * 1000;
   const round = Number((w.phase.match(/^round(\d)$/) || [])[1]) || 0;
   const bar = $("#wcBar").parentElement;
@@ -867,7 +1100,18 @@ function tickWait() {
   } else {
     bar.classList.add("indeterminate");
     $("#wcBar").style.width = "";
-    muse.textContent = "";
+    const items = w.phase === "research" ? (state.research?.items || []) : [];
+    if (items.length && Date.now() - (state.museAt || 0) > 5200) {
+      state.museAt = Date.now();
+      state.museIdx = ((state.museIdx ?? -1) + 1) % items.length;
+      const it = items[state.museIdx];
+      const kind = kindLabel(it.kind);
+      muse.classList.add("fade");
+      setTimeout(() => {
+        muse.innerHTML = "<b>" + esc(it.id || "Question") + (kind ? " · " + esc(kind) : "") + ".</b> " + esc(shorten(it.question || "", 140));
+        muse.classList.remove("fade");
+      }, 300);
+    } else if (!items.length) muse.textContent = "";
     $$(".seat.musing").forEach((e) => e.classList.remove("musing"));
   }
 }
