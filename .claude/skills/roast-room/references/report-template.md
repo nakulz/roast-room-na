@@ -22,6 +22,16 @@ Option scores: [A] x.x · [B] x.x · [C] x.x · Support for the resolution x.x/1
 
 Math: [one line per option]
 
+## Evidence
+
+Opened facts: [each current-world fact the call uses, one line, with its R or F id]
+User-supplied: [what the brief stated, labeled as the founder's words]
+Assumptions and inferences: [named, and kept separate from opened facts]
+Forecasts: [scenarios and ranges. A forecast is not an observation.]
+Unknown: [what stayed open, including a dropped trip]
+
+A brain source id quotes that seat's public work. It does not establish a new fact. A threshold this room proposes is not a measurement. Unresolved evidence is restated under Conditions or the minority report.
+
 ## Why the council landed here
 
 [3 to 5 bullets: the arguments that carried the room, each tagged with the seat and framework, e.g. (Hormozi, Value Equation)]

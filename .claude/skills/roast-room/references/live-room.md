@@ -8,13 +8,17 @@ The room is optional. Write these files anyway; they cost a few lines and the co
 
 | When | File |
 |---|---|
-| Step 2, with `brief.md` | `council.json` |
-| Round 1 cards back | `round-1.md` (one `## <Seat>` heading per card, cards verbatim, `## Chair notes` last) |
-| After the Round 1 Chair notes | `cruxes.json` |
+| After the shared packet is frozen, or as soon as the brief is saved when there is no packet | `council.json` |
+| Round 1 cards back, then the Chair notes in the same file | `round-1.md` (one `## <Seat>` heading per card, cards verbatim, `## Chair notes` last) |
+| After follow-ups close. When there is no follow-up window, write this as soon as the Chair notes are in `round-1.md`. Publishing this file closes the follow-up window. | `cruxes.json` |
 | Round 2 cards back | `round-2.md` |
 | With `draft-resolution.md` | `draft.json` (skip in quick mode when Round 3 is skipped) |
 | Round 3 cards back | `round-3.md` |
-| Last, after `verdict.md` | `verdict.json` |
+| Last, after `verdict.md` and both checkers | `verdict.json` |
+
+The room reads `council.json` as the start of Round 1. Until that file exists, the room stays on the idle table. `cruxes.json` is the start of Round 2. Leave it unwritten through the request pass and the follow-ups.
+
+`research/agenda.json`, `research/sources.json`, `research/briefing.md`, `research/requests.md`, and `research/followups/` are not room files. Do not write `research.json`. The watcher ignores `research/`. A `## <Seat>` heading or a `SEAT:` line inside a round file is a card, so a research request stays in `research/requests.md` and is not appended to `round-1.md`.
 
 ## council.json
 

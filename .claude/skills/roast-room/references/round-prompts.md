@@ -10,6 +10,8 @@ Paths in prompts are relative to the repo root; give the absolute repo root once
 
 **Pillar score.** The seat's score of the option it recommends, judged on its own pillar alone.
 
+**Research.** When the session has a packet, paste the research lines inside the round prompt. The request prompt is a separate reply after Round 1. It is not part of the Round 1 card. The rules are in `research.md`.
+
 ---
 
 ## Round 1: opening position
@@ -20,6 +22,8 @@ ROAST ROOM COUNCIL, ROUND 1 OF 3: OPENING POSITION
 Repo root: [absolute path]. You hold the [SEAT] seat ([pillar]). Read your brain's _hot.md, then at most three more brain files that fit this decision (frameworks.md and positions.md are usually the right ones).
 
 Read the brief: [session folder]/brief.md
+
+RESEARCH: If [session folder]/research/briefing.md exists, read it and [session folder]/research/sources.json. Every seat has this same packet. Cite a current fact as (R001) only when that id is opened, or mark it assumption, inference, forecast, unknown, or user-supplied. A forecast stays a forecast. A brain id such as (S014) is not a current fact. If there is no packet, do not invent a current fact. Do not put GAP, RAISED BY, or WOULD CHANGE on this card.
 
 Your weight on this decision: [w]/3 ([one-line reason]).
 
@@ -57,6 +61,8 @@ Repo root: [absolute path]. You hold the [SEAT] seat. Read your brain's _hot.md 
 
 Read: [session folder]/brief.md and [session folder]/round-1.md (every seat's card and the Chair's cruxes).
 
+RESEARCH: Read the final packet, the same one every seat has. That is [session folder]/research/briefing.md, including any Corrections section appended after the original sections, [session folder]/research/sources.json, and every file in [session folder]/research/followups/. Cite an opened id as (R001) or (F001), or mark the claim assumption, inference, forecast, unknown, or user-supplied. A brain id such as (S014) is not a current fact. If there is no packet, do not invent a current fact.
+
 THE CRUXES THE CHAIR SEES
 1. [crux]: [seats on each side]. [If this seat is on one side, name the argument it must answer.]
 2. ...
@@ -87,7 +93,9 @@ ROAST ROOM COUNCIL, ROUND 3 OF 3: VOTE ON THE DRAFT RESOLUTION
 
 Repo root: [absolute path]. You hold the [SEAT] seat. You already argued this in two rounds; read only your _hot.md if you need it.
 
-Read: [session folder]/brief.md, your own section of [session folder]/round-2.md, and [session folder]/draft-resolution.md.
+Read: [session folder]/brief.md, your own section of [session folder]/round-2.md, [session folder]/draft-resolution.md, and the same final packet as every other seat: [session folder]/research/briefing.md (original sections plus any appended corrections), [session folder]/research/sources.json, and every file in [session folder]/research/followups/.
+
+RESEARCH: Cite an opened id as (R001) or (F001), or mark the claim assumption, inference, forecast, unknown, or user-supplied. A brain id such as (S014) is not a current fact. If there is no packet, do not invent a current fact. Do not ask for research in this round.
 
 Answer in your seat's voice, under 150 words, in exactly this shape:
 
@@ -102,6 +110,28 @@ ONE LINE FOR THE FOUNDER: the thing from your pillar they must not forget.
 
 ---
 
+## Research request (not a round)
+
+One short reply per seat, after `round-1.md` includes the Chair notes, and only when a full council has a packet. Save the reply in `research/requests.md`. Do not write it into a round file.
+
+```
+ROAST ROOM COUNCIL, RESEARCH REQUEST. THIS IS NOT A ROUND.
+
+Repo root: [absolute path]. You hold the [SEAT] seat. Read your brain's _hot.md only if you need a phrase you already use. You still speak as the seat.
+
+Read: [session folder]/brief.md, [session folder]/research/briefing.md, [session folder]/research/sources.json, and [session folder]/round-1.md, including the Chair notes.
+
+Answer in exactly this shape, or the single word none:
+
+GAP: one sentence. The fact you do not know, or the opened id you challenge and the concrete defect.
+RAISED BY: the brief, a packet id, or a named seat's Round 1 claim.
+WOULD CHANGE: the option score or the objection that moves if this lands.
+
+A challenge names an id already in research/sources.json and a defect you can point at in that packet: a misquote, a wrong date, a scope or version mismatch, a conclusion the cited passage does not support, a contradiction with another opened record, or another concrete defect in an opened record. Brain text is not a defect. You do not browse, fetch, or send a researcher. Your tools stay Read, Grep, and Glob. This reply does not rewrite your Round 1 card.
+```
+
+---
+
 ## Single-seat consult
 
 ```
@@ -112,5 +142,5 @@ Repo root: [absolute path]. You hold the [SEAT] seat. Read your brain's _hot.md,
 THE QUESTION
 [question, plus any context]
 
-Answer in your seat's voice, first person, under 500 words: your call, your reasoning with named frameworks and source ids, what you would do this week, and the question you would ask back. Do not narrate the expert in the third person. End with "Sources:" and the source ids you used.
+Answer in your seat's voice, first person, under 500 words: your call, your reasoning with named frameworks and source ids, what you would do this week, and the question you would ask back. Do not narrate the expert in the third person. Do not invent a current fact the brain does not contain. Say that it is unknown. End with "Sources:" and the source ids you used.
 ```
